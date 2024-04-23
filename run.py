@@ -47,6 +47,10 @@ def display_decision(user_input):
             table.add_row([item, deadline])
         print(table)
         edit_decision = input("Would you like to edit the list? Y/N\n").lower()
+        if edit_decision == "y":
+            edit_list()
+        else:
+            user_decision()
 
     elif user_input == "history":
         print("history")
@@ -57,8 +61,41 @@ def display_decision(user_input):
         user_decision()
 
 
+def edit_list():
+    edit_type = input("Type 'edit' to edit a list item\nType 'add' to add an item to the list\nType 'complete' to complete a task\nType 'delete' to delete an item from the list\n").lower()
+    if edit_type == "edit":
+        edit_task()
+    elif edit_type == "add":
+        add_task()
+    elif edit_type == "complete":
+        complete_task()
+    elif edit_type == "remove":
+        remove_task()
+    else:
+        print(f"Did not recognize '{edit_type}'. Did you type that correctly?")
+        input("Press enter to try again")
+        edit_list()
 
+
+def add_task():
+    task = input("Task to be added:\n")
+    deadline = input("Task deadline in yyyy-mm-dd:\n")
+    to_do_sheet = SHEET.worksheet("To-do")
+    to_do_sheet.append_row([task, deadline])
+
+
+def edit_task():
+    print("edit")
+
+
+def remove_task():
+    print("remove")
+
+
+
+def complete_task():
+    print("complete")
 
 
 print("Welcome back to your To-do List!\n")
-user_input = user_decision()
+user_decision()
