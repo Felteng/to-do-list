@@ -46,10 +46,12 @@ def display_decision(user_input):
     """
     if user_input == "view":
         to_do_list, deadlines = get_to_do_list()
-        table = PrettyTable(["Task", "Deadline"])
+        table = PrettyTable(["Item", "Task", "Deadline"])
 
+        index = 1
         for item, deadline in zip(to_do_list[1:], deadlines[1:]):
-            table.add_row([item, deadline])
+            table.add_row([index, item, deadline])
+            index += 1
         print(table)
         edit_decision = input("Would you like to edit the list? Y/N\n").lower()
         if edit_decision == "y":
@@ -72,7 +74,7 @@ def edit_list():
     Call the function relevant to the choice.
     If the input does not match options alert user and allow another attempt.
     """
-    edit_type = input("Type 'edit' to edit a list item\nType 'add' to add an item to the list\nType 'complete' to complete a task\nType 'delete' to delete an item from the list\n").lower()
+    edit_type = input("Type 'edit' to edit a list item\nType 'add' to add an item to the list\nType 'complete' to complete a task\nType 'remove' to remove an item from the list\n").lower()
     if edit_type == "edit":
         edit_task()
     elif edit_type == "add":
