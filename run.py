@@ -60,6 +60,7 @@ def display_decision(user_input):
 
     elif user_input == "history":
         print("history")
+        user_decision()
     
     else:
         print(f"Invalid command.. You entered: '{user_input}'\nDid you type the command correctly?")
