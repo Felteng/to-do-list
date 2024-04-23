@@ -39,6 +39,11 @@ def user_decision():
 
 
 def display_decision(user_input):
+    """
+    Display the choice the user made in user_decision() and provide
+    new options based on what was chosen and dispalyed.
+    If the input in user_decision() was faulty alert the user and allow a new attempt.
+    """
     if user_input == "view":
         to_do_list, deadlines = get_to_do_list()
         table = PrettyTable(["Task", "Deadline"])
@@ -62,6 +67,11 @@ def display_decision(user_input):
 
 
 def edit_list():
+    """
+    Grab input from user as to how they would like to edit the to do list.
+    Call the function relevant to the choice.
+    If the input does not match options alert user and allow another attempt.
+    """
     edit_type = input("Type 'edit' to edit a list item\nType 'add' to add an item to the list\nType 'complete' to complete a task\nType 'delete' to delete an item from the list\n").lower()
     if edit_type == "edit":
         edit_task()
@@ -77,23 +87,38 @@ def edit_list():
         edit_list()
 
 
+def edit_task():
+    """
+    Ask the user which row in the list they would like to edit.
+    Let the user provide new input to update the relevant cells.
+    """
+    print("edit")
+
+
 def add_task():
+    """
+    Ask the user for a task description and task deadline to append
+    the new task to the sheet.
+    """
     task = input("Task to be added:\n")
     deadline = input("Task deadline in yyyy-mm-dd:\n")
     to_do_sheet = SHEET.worksheet("To-do")
     to_do_sheet.append_row([task, deadline])
 
 
-def edit_task():
-    print("edit")
-
-
 def remove_task():
+    """
+    Ask the user which task they would like to have removed and
+    delete that row from the sheet.
+    """
     print("remove")
 
 
-
 def complete_task():
+    """
+    Ask the user which task should be completed and append
+    that task to the 'Completed' sheet.
+    """
     print("complete")
 
 
