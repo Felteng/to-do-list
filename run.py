@@ -1,7 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
 from prettytable import PrettyTable
-from pprint import pprint
 
 # Scope and credentials code from Code Institutes Love Sandwiches project
 
@@ -104,7 +103,7 @@ def edit_task():
         new_task = input("Update task to:\n")
         to_do_sheet.update_cell(task_to_edit, 1, new_task)
     elif cell_to_edit == "deadline":
-        new_deadline = input("Update deadline to:\n")
+        new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
         to_do_sheet.update_cell(task_to_edit, 2, new_deadline)
     elif cell_to_edit == "both":
         new_task = input("Update task to:\n")
