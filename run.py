@@ -104,7 +104,8 @@ def add_task():
     deadline = input("Task deadline in yyyy-mm-dd:\n")
     to_do_sheet = SHEET.worksheet("To-do")
     to_do_sheet.append_row([task, deadline])
-
+    print("Task added successfully\n")
+    edit_list()
 
 def remove_task():
     """
