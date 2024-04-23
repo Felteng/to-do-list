@@ -35,7 +35,10 @@ def user_decision():
     print("Type: 'view' to show To-do List.\nType 'history' to show completed tasks.\n")
     user_input = input("Enter your command here:\n").lower()
     print("")
-    # Everything below this is subject to get moved into a seperate function
+    display_decision(user_input)
+
+
+def display_decision(user_input):
     if user_input == "view":
         to_do_list, deadlines = get_to_do_list()
         table = PrettyTable(["Task", "Deadline"])
@@ -43,6 +46,7 @@ def user_decision():
         for item, deadline in zip(to_do_list[1:], deadlines[1:]):
             table.add_row([item, deadline])
         print(table)
+        edit_decision = input("Would you like to edit the list? Y/N\n").lower()
 
     elif user_input == "history":
         print("history")
@@ -50,8 +54,11 @@ def user_decision():
     else:
         print(f"Invalid command.. You entered: '{user_input}'\nDid you type the command correctly?")
         input("Press enter to try again\n")
-    user_decision()
+        user_decision()
+
+
+
 
 
 print("Welcome back to your To-do List!\n")
-user_decision()
+user_input = user_decision()
