@@ -171,39 +171,6 @@ def add_task():
     print("Task added successfully\n")
     edit_list()
 
-
-def remove_task():
-    """
-    Ask the user which task they would like to have removed and
-    delete that row from the sheet.
-    Raise ValueError if the index input is smaller than 1 or if it's not a number.
-    """
-    try:
-        index_to_remove = int(input("Which task (index) would you like to remove?\n"))
-        if index_to_remove < 1:
-            raise ValueError
-    except ValueError:
-        print("That is not a valid number. Has to be a number, that is bigger than 0.")
-        remove_task()
-
-    def confirm():
-        confirm_remove = input(f"Are you sure you want to remove task {index_to_remove}? y/n\n").lower()
-        if confirm_remove == "y":
-            print(f"Removing task {index_to_remove}...")
-            TO_DO_SHEET.delete_rows(index_to_remove + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
-            print("Task removed successfully\n")
-            edit_list()
-
-        elif confirm_remove == "n":
-            edit_list()
-
-        else:
-            input(f"Did not recognize {confirm_remove}, did you type 'y' or 'n'?\nPress enter to try again\n")
-            confirm()
-
-    confirm()
-
-
 def complete_task():
     """
     Ask the user which task should be completed and append
@@ -241,6 +208,38 @@ def complete_task():
             confirm()
 
     confirm() 
+
+
+def remove_task():
+    """
+    Ask the user which task they would like to have removed and
+    delete that row from the sheet.
+    Raise ValueError if the index input is smaller than 1 or if it's not a number.
+    """
+    try:
+        index_to_remove = int(input("Which task (index) would you like to remove?\n"))
+        if index_to_remove < 1:
+            raise ValueError
+    except ValueError:
+        print("That is not a valid number. Has to be a number, that is bigger than 0.")
+        remove_task()
+
+    def confirm():
+        confirm_remove = input(f"Are you sure you want to remove task {index_to_remove}? y/n\n").lower()
+        if confirm_remove == "y":
+            print(f"Removing task {index_to_remove}...")
+            TO_DO_SHEET.delete_rows(index_to_remove + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
+            print("Task removed successfully\n")
+            edit_list()
+
+        elif confirm_remove == "n":
+            edit_list()
+
+        else:
+            input(f"Did not recognize {confirm_remove}, did you type 'y' or 'n'?\nPress enter to try again\n")
+            confirm()
+
+    confirm()
 
 
 print("Welcome back to your To-do List!\n")
