@@ -130,7 +130,7 @@ def edit_task():
         task_to_edit = int(input("Which task index would you like to edit?\n"))
         if task_to_edit < 1:
             raise ValueError
-        task_to_edit + 1
+        task_to_edit + 1 # Add a value of 1 here since actual row 1 in the sheet has the headings
     except ValueError:
         print("That is not a valid number. Has to be a number, that is bigger than 0.")
         edit_task()
@@ -190,7 +190,7 @@ def remove_task():
         confirm_remove = input(f"Are you sure you want to remove task {index_to_remove}? y/n\n").lower()
         if confirm_remove == "y":
             print(f"Removing task {index_to_remove}...")
-            TO_DO_SHEET.delete_rows(index_to_remove + 1)
+            TO_DO_SHEET.delete_rows(index_to_remove + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task removed successfully\n")
             edit_list()
 
@@ -225,11 +225,11 @@ def complete_task():
             print(f"Completing task {index_to_complete}...")
             completed_sheet = SHEET.worksheet("Completed")
             today_date = datetime.datetime.now().date()
-            to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete + 1)
+            to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             
             to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
             completed_sheet.append_row(to_completed_sheet)
-            TO_DO_SHEET.delete_rows(index_to_complete + 1)
+            TO_DO_SHEET.delete_rows(index_to_complete + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task completed successfully\n")
             edit_list()
 
