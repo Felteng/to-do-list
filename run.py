@@ -1,8 +1,9 @@
 import gspread
+import datetime
 from google.oauth2.service_account import Credentials
 from prettytable import PrettyTable
 
-# Scope and credentials code from Code Institutes Love Sandwiches project
+# SCOPE and credentials code from Code Institutes Love Sandwiches project
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -10,20 +11,22 @@ SCOPE = [
     "https://www.googleapis.com/auth/drive"
     ]
 
+# Global variables
+### Code Institute code ###
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPEAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPEAD_CLIENT.open("to_do_list")
-
+### Code institute code ends here ###
+TO_DO_SHEET = SHEET.worksheet("To-do")
 
 def get_to_do_list():
     """
     Retrieve the tasks and their respective deadlines from the to_do_list spreadsheet.
     Return them both as 2 seperate lists to allow looping through them sperately to print the table.
     """
-    to_do_sheet = SHEET.worksheet("To-do")
-    to_do_list = to_do_sheet.col_values(1)
-    deadlines = to_do_sheet.col_values(2)
+    to_do_list = TO_DO_SHEET.col_values(1)
+    deadlines = TO_DO_SHEET.col_values(2)
     return to_do_list, deadlines
     
 
@@ -99,18 +102,17 @@ def edit_task():
     """
     task_to_edit = int(input("Which task index would you like to edit?\n")) + 1
     cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
-    to_do_sheet = SHEET.worksheet("To-do")
     if cell_to_edit == "task":
         new_task = input("Update task to:\n")
-        to_do_sheet.update_cell(task_to_edit, 1, new_task)
+        TO_DO_SHEET.update_cell(task_to_edit, 1, new_task)
     elif cell_to_edit == "deadline":
         new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
-        to_do_sheet.update_cell(task_to_edit, 2, new_deadline)
+        TO_DO_SHEET.update_cell(task_to_edit, 2, new_deadline)
     elif cell_to_edit == "both":
         new_task = input("Update task to:\n")
         new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
-        to_do_sheet.update_cell(task_to_edit, 1, new_task)
-        to_do_sheet.update_cell(task_to_edit, 2, new_deadline)
+        TO_DO_SHEET.update_cell(task_to_edit, 1, new_task)
+        TO_DO_SHEET.update_cell(task_to_edit, 2, new_deadline)
     else:
         print(f"Did not recognize '{cell_to_edit}'. Did you type that correctly?")
         input("Press enter to try again")
@@ -127,8 +129,7 @@ def add_task():
     """
     task = input("Task to be added:\n")
     deadline = input("Task deadline in yyyy-mm-dd:\n")
-    to_do_sheet = SHEET.worksheet("To-do")
-    to_do_sheet.append_row([task, deadline])
+    TO_DO_SHEET.append_row([task, deadline])
     print("Task added successfully\n")
     edit_list()
 
@@ -138,22 +139,35 @@ def remove_task():
     Ask the user which task they would like to have removed and
     delete that row from the sheet.
     """
-    index_to_remove = int(input("Which item index would you like to remove?\n"))
-    confirm_remove = input(f"Are you sure you want to delete task {index_to_remove}? Y/N\n").lower()
+    index_to_remove = int(input("Which task (index) would you like to remove?\n")) + 1
+    confirm_remove = input(f"Are you sure you want to delete task {index_to_remove-1}? Y/N\n").lower()
     if confirm_remove == "y":
-        SHEET.worksheet("To-do").delete_rows(index_to_remove+1)
+        TO_DO_SHEET.delete_rows(index_to_remove)
         print("Task removed successfully\n")
         edit_list()
-    else:
+    elif confirm_remove == "n":
         edit_list()
 
 
 def complete_task():
     """
     Ask the user which task should be completed and append
-    that task to the 'Completed' sheet.
+    that task to the 'Completed' sheet with the date the
+    task was completed added.
     """
-    print("complete")
+    index_to_complete = int(input("Which task (index) would you like to complete?\n")) + 1
+    confirm_complete = input(f"Are you sure you want to complete task {index_to_complete-1}? Y/N\n").lower()
+    if confirm_complete == "y":
+        completed_sheet = SHEET.worksheet("Completed")
+        today_date = datetime.datetime.now().date()
+        to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete)
+
+        to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
+        completed_sheet.append_row(to_completed_sheet)
+        TO_DO_SHEET.delete_rows(index_to_complete)
+        print("Task completed successfully\n")
+    elif confirm_complete == "n":
+        edit_list()
 
 
 print("Welcome back to your To-do List!\n")
