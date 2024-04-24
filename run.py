@@ -67,10 +67,10 @@ def display_decision(user_input):
             table.add_row([index, task, deadline])
             index += 1
         print(table)
-        edit_decision = input("Would you like to edit the list? Y/N\n").lower()
+        edit_decision = input("Would you like to edit the list? y/n\n").lower()
         if edit_decision == "y":
             edit_list()
-            
+
         else:
             user_decision()
 
@@ -168,14 +168,22 @@ def remove_task():
     delete that row from the sheet.
     """
     index_to_remove = int(input("Which task (index) would you like to remove?\n")) + 1
-    confirm_remove = input(f"Are you sure you want to delete task {index_to_remove-1}? Y/N\n").lower()
-    if confirm_remove == "y":
-        TO_DO_SHEET.delete_rows(index_to_remove)
-        print("Task removed successfully\n")
-        edit_list()
+    def confirm():
+        confirm_remove = input(f"Are you sure you want to remove task {index_to_remove-1}? y/n\n").lower()
+        if confirm_remove == "y":
+            print(f"Removing task {index_to_remove}...")
+            TO_DO_SHEET.delete_rows(index_to_remove)
+            print("Task removed successfully\n")
+            edit_list()
 
-    elif confirm_remove == "n":
-        edit_list()
+        elif confirm_remove == "n":
+            edit_list()
+
+        else:
+            input(f"Did not recognize {confirm_remove}, did you type 'y' or 'n'?\nPress enter to try again\n")
+            confirm()
+
+    confirm()
 
 
 def complete_task():
@@ -185,21 +193,28 @@ def complete_task():
     task was completed added.
     """
     index_to_complete = int(input("Which task (index) would you like to complete?\n")) + 1
-    confirm_complete = input(f"Are you sure you want to complete task {index_to_complete-1}? Y/N\n").lower()
-    if confirm_complete == "y":
-        completed_sheet = SHEET.worksheet("Completed")
-        today_date = datetime.datetime.now().date()
-        to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete)
-        
-        print("Completing task")
-        to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
-        completed_sheet.append_row(to_completed_sheet)
-        TO_DO_SHEET.delete_rows(index_to_complete)
-        print("Task completed successfully\n")
-        edit_list()
+    def complete():
+        confirm_complete = input(f"Are you sure you want to complete task {index_to_complete-1}? y/n\n").lower()
+        if confirm_complete == "y":
+            completed_sheet = SHEET.worksheet("Completed")
+            today_date = datetime.datetime.now().date()
+            to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete)
+            
+            print(f"Completing task {index_to_complete}")
+            to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
+            completed_sheet.append_row(to_completed_sheet)
+            TO_DO_SHEET.delete_rows(index_to_complete)
+            print("Task completed successfully\n")
+            edit_list()
 
-    elif confirm_complete == "n":
-        edit_list()
+        elif confirm_complete == "n":
+            edit_list()
+
+        else:
+            input(f"Did not recognize {confirm_complete}, did you type 'y' or 'n'?\nPress enter to try again\n")
+            confirm()
+
+    confirm() 
 
 
 print("Welcome back to your To-do List!\n")
