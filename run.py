@@ -25,10 +25,22 @@ def get_to_do_list():
     Retrieve the tasks and their respective deadlines from the to_do_list spreadsheet.
     Return them both as 2 seperate lists to allow looping through them sperately to print the table.
     """
-    to_do_list = TO_DO_SHEET.col_values(1)
+    tasks = TO_DO_SHEET.col_values(1)
     deadlines = TO_DO_SHEET.col_values(2)
-    return to_do_list, deadlines
+    return tasks, deadlines
     
+
+def get_completed_list():
+    """
+    Fetch the data from all 3 columns in the completed sheet to allow for iteration
+    and display to the user.
+    """
+    completed_sheet = SHEET.worksheet("Completed")
+    tasks = completed_sheet.col_values(1)
+    deadlines = completed_sheet.col_values(2)
+    time_completed = completed_sheet.col_values(3)
+    return tasks, deadlines, time_completed
+
 
 def user_decision():
     """
@@ -47,22 +59,30 @@ def display_decision(user_input):
     If the input in user_decision() was faulty alert the user and allow a new attempt.
     """
     if user_input == "view":
-        to_do_list, deadlines = get_to_do_list()
+        tasks, deadlines = get_to_do_list()
         table = PrettyTable(["Index", "Task", "Deadline"])
 
         index = 1
-        for item, deadline in zip(to_do_list[1:], deadlines[1:]):
-            table.add_row([index, item, deadline])
+        for task, deadline in zip(tasks[1:], deadlines[1:]):
+            table.add_row([index, task, deadline])
             index += 1
         print(table)
         edit_decision = input("Would you like to edit the list? Y/N\n").lower()
         if edit_decision == "y":
             edit_list()
+            
         else:
             user_decision()
 
     elif user_input == "history":
-        print("history")
+        tasks, deadlines, times = get_completed_list()
+        table = PrettyTable(["Index", "Task", "Deadline", "Completed"])
+
+        index = 1
+        for task, deadline, time in zip(tasks[1:], deadlines[1:], times[1:]):
+            table.add_row([index, task, deadline, time])
+            index += 1
+        print(table)
         user_decision()
     
     else:
@@ -81,14 +101,19 @@ def edit_list():
     print("")
     if edit_type == "edit":
         edit_task()
+
     elif edit_type == "add":
         add_task()
+        
     elif edit_type == "complete":
         complete_task()
+
     elif edit_type == "remove":
         remove_task()
+
     elif edit_type == "none":
         user_decision()
+
     else:
         print(f"Did not recognize '{edit_type}'. Did you type that correctly?")
         input("Press enter to try again")
@@ -105,14 +130,17 @@ def edit_task():
     if cell_to_edit == "task":
         new_task = input("Update task to:\n")
         TO_DO_SHEET.update_cell(task_to_edit, 1, new_task)
+        
     elif cell_to_edit == "deadline":
         new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
         TO_DO_SHEET.update_cell(task_to_edit, 2, new_deadline)
+
     elif cell_to_edit == "both":
         new_task = input("Update task to:\n")
         new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
         TO_DO_SHEET.update_cell(task_to_edit, 1, new_task)
         TO_DO_SHEET.update_cell(task_to_edit, 2, new_deadline)
+
     else:
         print(f"Did not recognize '{cell_to_edit}'. Did you type that correctly?")
         input("Press enter to try again")
@@ -145,6 +173,7 @@ def remove_task():
         TO_DO_SHEET.delete_rows(index_to_remove)
         print("Task removed successfully\n")
         edit_list()
+
     elif confirm_remove == "n":
         edit_list()
 
@@ -161,11 +190,14 @@ def complete_task():
         completed_sheet = SHEET.worksheet("Completed")
         today_date = datetime.datetime.now().date()
         to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete)
-
+        
+        print("Completing task")
         to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
         completed_sheet.append_row(to_completed_sheet)
         TO_DO_SHEET.delete_rows(index_to_complete)
         print("Task completed successfully\n")
+        edit_list()
+
     elif confirm_complete == "n":
         edit_list()
 
