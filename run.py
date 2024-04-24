@@ -124,8 +124,17 @@ def edit_task():
     """
     Ask the user which row in the list they would like to edit.
     Let the user provide new input to update the relevant cells.
+    Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
-    task_to_edit = int(input("Which task index would you like to edit?\n")) + 1
+    try:
+        task_to_edit = int(input("Which task index would you like to edit?\n"))
+        if task_to_edit < 1:
+            raise ValueError
+        task_to_edit + 1
+    except ValueError:
+        print("That is not a valid number. Has to be a number, that is bigger than 0.")
+        edit_task()
+
     cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
     if cell_to_edit == "task":
         new_task = input("Update task to:\n")
@@ -157,6 +166,7 @@ def add_task():
     """
     task = input("Task to be added:\n")
     deadline = input("Task deadline in yyyy-mm-dd:\n")
+    print("Adding task...")
     TO_DO_SHEET.append_row([task, deadline])
     print("Task added successfully\n")
     edit_list()
@@ -166,13 +176,21 @@ def remove_task():
     """
     Ask the user which task they would like to have removed and
     delete that row from the sheet.
+    Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
-    index_to_remove = int(input("Which task (index) would you like to remove?\n")) + 1
+    try:
+        index_to_remove = int(input("Which task (index) would you like to remove?\n"))
+        if index_to_remove < 1:
+            raise ValueError
+    except ValueError:
+        print("That is not a valid number. Has to be a number, that is bigger than 0.")
+        remove_task()
+
     def confirm():
-        confirm_remove = input(f"Are you sure you want to remove task {index_to_remove-1}? y/n\n").lower()
+        confirm_remove = input(f"Are you sure you want to remove task {index_to_remove}? y/n\n").lower()
         if confirm_remove == "y":
             print(f"Removing task {index_to_remove}...")
-            TO_DO_SHEET.delete_rows(index_to_remove)
+            TO_DO_SHEET.delete_rows(index_to_remove + 1)
             print("Task removed successfully\n")
             edit_list()
 
@@ -191,19 +209,27 @@ def complete_task():
     Ask the user which task should be completed and append
     that task to the 'Completed' sheet with the date the
     task was completed added.
+    Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
-    index_to_complete = int(input("Which task (index) would you like to complete?\n")) + 1
-    def complete():
-        confirm_complete = input(f"Are you sure you want to complete task {index_to_complete-1}? y/n\n").lower()
+    try:
+        index_to_complete = int(input("Which task (index) would you like to complete?\n"))
+        if index_to_complete < 1:
+            raise ValueError
+    except ValueError:
+        print("That is not a valid number. Has to be a number, that is bigger than 0.")
+        complete_task()
+
+    def confirm():
+        confirm_complete = input(f"Are you sure you want to complete task {index_to_complete}? y/n\n").lower()
         if confirm_complete == "y":
+            print(f"Completing task {index_to_complete}...")
             completed_sheet = SHEET.worksheet("Completed")
             today_date = datetime.datetime.now().date()
-            to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete)
+            to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete + 1)
             
-            print(f"Completing task {index_to_complete}")
             to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
             completed_sheet.append_row(to_completed_sheet)
-            TO_DO_SHEET.delete_rows(index_to_complete)
+            TO_DO_SHEET.delete_rows(index_to_complete + 1)
             print("Task completed successfully\n")
             edit_list()
 
