@@ -96,18 +96,34 @@ def user_decision():
     """
     Ask the user what they wish to see from the spreadsheet.
     If the input in user_input was faulty, alert the user and allow a new attempt.
+    If user wants to see the to-do list provide a follow-up question of whether
+    they would like to edit it as well.
     """
     print("Type: 'view' to show To-do List.\nType 'history' to show completed tasks.\n")
     user_input = input("Enter your command here:\n").lower()
     if user_input == "view":
         display_to_do_list()
+        edit_decision_made = False
+
+        while edit_decision_made == False:
+            edit_decision = input("Would you like to edit the list? y/n\n").lower()
+            if edit_decision == "y":
+                edit_decision_made = True
+                edit_list()
+
+            elif edit_decision == "n":
+                edit_decision_made = True
+                user_decision()
+
+            else:
+                input(f"Did not recognize '{edit_decision}'. Did you type 'y' or 'n'?\nPress enter to try again")
 
     elif user_input == "history":
         display_completed_list()
+        user_decision()
 
     else:
-        print(f"Invalid command.. You entered: '{user_input}'\nDid you type the command correctly?")
-        input("Press enter to try again\n")
+        input(f"Invalid command.. You entered: '{user_input}'. Did you type the command correctly?\nPress enter to try again")
         user_decision()
 
 
@@ -124,9 +140,6 @@ def display_to_do_list():
         table.add_row([index, task, deadline])
         index += 1
     print(table)
-    edit_decision = input("Would you like to edit the list? y/n\n").lower()
-    if edit_decision == "y":
-        edit_list()
 
 
 def display_completed_list():
@@ -169,8 +182,7 @@ def edit_list():
         user_decision()
 
     else:
-        print(f"Did not recognize '{edit_type}'. Did you type that correctly?")
-        input("Press enter to try again")
+        input(f"Did not recognize '{edit_type}'. Did you type that correctly?\nPress enter to try again")
         edit_list()
 
 
@@ -205,10 +217,10 @@ def edit_task():
         print("Task and deadline updated successfully\n")
 
     else:
-        print(f"Did not recognize '{cell_to_edit}'. Did you type that correctly?")
-        input("Press enter to try again")
+        input(f"Did not recognize '{cell_to_edit}'. Did you type that correctly?\nPress enter to try again")
         edit_task()
-    
+        
+    display_to_do_list()
     edit_list()
 
 
@@ -222,6 +234,7 @@ def add_task():
     print("Adding task...")
     TO_DO_SHEET.append_row([task, deadline])
     print("Task added successfully\n")
+    display_to_do_list()
     edit_list()
 
 def complete_task():
@@ -250,13 +263,14 @@ def complete_task():
             completed_sheet.append_row(to_completed_sheet)
             TO_DO_SHEET.delete_rows(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task completed successfully\n")
+            display_to_do_list()
             edit_list()
 
         elif confirm_complete == "n":
             edit_list()
 
         else:
-            input(f"Did not recognize {confirm_complete}, did you type 'y' or 'n'?\nPress enter to try again\n")
+            input(f"Did not recognize {confirm_complete}, did you type 'y' or 'n'?\nPress enter to try again")
             confirm()
 
     confirm() 
@@ -281,13 +295,14 @@ def remove_task():
             print(f"Removing task {task_index}...")
             TO_DO_SHEET.delete_rows(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task removed successfully\n")
+            display_to_do_list()
             edit_list()
 
         elif confirm_remove == "n":
             edit_list()
 
         else:
-            input(f"Did not recognize {confirm_remove}, did you type 'y' or 'n'?\nPress enter to try again\n")
+            input(f"Did not recognize {confirm_remove}, did you type 'y' or 'n'?\nPress enter to try again")
             confirm()
 
     confirm()
