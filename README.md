@@ -3,7 +3,9 @@ This program functions as a to-do list which the user may manipulate as they see
 
 ## Table of contents
 
-## User stories
+## User experience
+
+### User stories
 
 ## Features and planning
 
@@ -16,6 +18,17 @@ The goal with this project is largely to allow more learning by coding and creat
 ### Features
 
 ## Technologies used
+
+### Languages
+- Python
+
+### Frameworks and libraries
+- Google Cloud - Setting up API connections.
+- GSpread - Manipulation of the spreadsheet holding the task information.
+- PrettyTable - Printing a comprehenisive table to the terminal.
+- OAuth2 - Authenticating credentials for API.
+- Flake8 - In IDE linter.
+- CI Python Linter - External linter for live adjustments.
 
 ## Testing
 
