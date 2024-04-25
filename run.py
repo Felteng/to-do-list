@@ -95,50 +95,54 @@ def validate_date_input(action):
 def user_decision():
     """
     Ask the user what they wish to see from the spreadsheet.
+    If the input in user_input was faulty, alert the user and allow a new attempt.
     """
     print("Type: 'view' to show To-do List.\nType 'history' to show completed tasks.\n")
     user_input = input("Enter your command here:\n").lower()
-    print("")
-    display_decision(user_input)
-
-
-def display_decision(user_input):
-    """
-    Display the choice the user made in user_decision() and provide
-    new options based on what was chosen and dispalyed.
-    If the input in user_decision() was faulty alert the user and allow a new attempt.
-    """
     if user_input == "view":
-        tasks, deadlines = get_to_do_list()
-        table = PrettyTable(["Index", "Task", "Deadline"])
-
-        index = 1
-        for task, deadline in zip(tasks[1:], deadlines[1:]):
-            table.add_row([index, task, deadline])
-            index += 1
-        print(table)
-        edit_decision = input("Would you like to edit the list? y/n\n").lower()
-        if edit_decision == "y":
-            edit_list()
-
-        else:
-            user_decision()
+        display_to_do_list()
 
     elif user_input == "history":
-        tasks, deadlines, times = get_completed_list()
-        table = PrettyTable(["Index", "Task", "Deadline", "Completed"])
+        display_completed_list()
 
-        index = 1
-        for task, deadline, time in zip(tasks[1:], deadlines[1:], times[1:]):
-            table.add_row([index, task, deadline, time])
-            index += 1
-        print(table)
-        user_decision()
-    
     else:
         print(f"Invalid command.. You entered: '{user_input}'\nDid you type the command correctly?")
         input("Press enter to try again\n")
         user_decision()
+
+
+def display_to_do_list():
+    """
+    If 'view' was chosen in user_decision() then display a table of
+    all the tasks that are yet to be completed in the 'To-do' worksheet.
+    """
+    tasks, deadlines = get_to_do_list()
+    table = PrettyTable(["Index", "Task", "Deadline"])
+
+    index = 1
+    for task, deadline in zip(tasks[1:], deadlines[1:]): # Start from 2nd item in list to avoid printing the spreadsheet headings.
+        table.add_row([index, task, deadline])
+        index += 1
+    print(table)
+    edit_decision = input("Would you like to edit the list? y/n\n").lower()
+    if edit_decision == "y":
+        edit_list()
+
+
+def display_completed_list():
+    """
+    If 'history' was chosen in user_decision() then display a table of
+    all the tasks in the 'Completed' worksheet.
+    """
+    tasks, deadlines, times = get_completed_list()
+    table = PrettyTable(["Index", "Task", "Deadline", "Completed"])
+
+    index = 1
+    for task, deadline, time in zip(tasks[1:], deadlines[1:], times[1:]): # Start from 2nd item in list to avoid printing the spreadsheet headings.
+        table.add_row([index, task, deadline, time])
+        index += 1
+    print(table)
+    user_decision()
 
 
 def edit_list():
