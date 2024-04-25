@@ -272,7 +272,7 @@ def complete_task():
             edit_list()
 
         else:
-            input(f"Did not recognize {confirm_complete}, did you type 'y' or 'n'?\nPress enter to try again")
+            input(f"Did not recognize '{confirm_complete}', did you type 'y' or 'n'?\nPress enter to try again")
             confirm()
 
     confirm()
@@ -304,7 +304,8 @@ def remove_task():
             edit_list()
 
         else:
-            input(f"Did not recognize {confirm_remove}, did you type 'y' or 'n'?\nPress enter to try again")
+            input(f"Did not recognize '{confirm_remove}', did you type 'y' or 'n'?\nPress enter to try again")
+
             confirm()
 
     confirm()
