@@ -118,44 +118,58 @@ def edit_list():
         print(f"Did not recognize '{edit_type}'. Did you type that correctly?")
         input("Press enter to try again")
         edit_list()
-    
+
+
+def validate_index_input():
+    """
+    Call this function for any action that needs the user to select an index to access.
+    Raise ValueError if the index input is smaller than 1 or if it's not a number.
+    """    
+    try:
+        task_index = int(input("Which task index would you like to edit?\n"))
+        if task_index < 1:
+            raise ValueError
+        return task_index
+    except ValueError:
+        print("That is not a valid number. Has to be a number, that is bigger than 0.")
+        return False
+
+
 
 def edit_task():
     """
     Ask the user which row in the list they would like to edit.
     Let the user provide new input to update the relevant cells.
-    Raise ValueError if the index input is smaller than 1 or if it's not a number.
+
     """
-    try:
-        task_to_edit = int(input("Which task index would you like to edit?\n"))
-        if task_to_edit < 1:
-            raise ValueError
-        task_to_edit + 1 # Add a value of 1 here since actual row 1 in the sheet has the headings
-    except ValueError:
-        print("That is not a valid number. Has to be a number, that is bigger than 0.")
-        edit_task()
+    task_index = validate_index_input()
+    if task_index == False:
+       edit_task()
+    task_index += 1 # Add a value of 1 here since actual row 1 in the sheet has the headings
 
     cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
     if cell_to_edit == "task":
         new_task = input("Update task to:\n")
-        TO_DO_SHEET.update_cell(task_to_edit, 1, new_task)
+        TO_DO_SHEET.update_cell(task_index, 1, new_task)
+        print("Task updated successfully\n")
         
     elif cell_to_edit == "deadline":
         new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
-        TO_DO_SHEET.update_cell(task_to_edit, 2, new_deadline)
+        TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
+        print("Deadline updated successfully\n")
 
     elif cell_to_edit == "both":
         new_task = input("Update task to:\n")
         new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
-        TO_DO_SHEET.update_cell(task_to_edit, 1, new_task)
-        TO_DO_SHEET.update_cell(task_to_edit, 2, new_deadline)
+        TO_DO_SHEET.update_cell(task_index, 1, new_task)
+        TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
+        print("Task and deadline updated successfully\n")
 
     else:
         print(f"Did not recognize '{cell_to_edit}'. Did you type that correctly?")
         input("Press enter to try again")
         edit_task()
     
-    print("Task updated successfully\n")
     edit_list()
 
 
@@ -178,25 +192,24 @@ def complete_task():
     task was completed added.
     Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
-    try:
-        index_to_complete = int(input("Which task (index) would you like to complete?\n"))
-        if index_to_complete < 1:
-            raise ValueError
-    except ValueError:
-        print("That is not a valid number. Has to be a number, that is bigger than 0.")
+    task_index = validate_index_input()
+    if task_index == False:
         complete_task()
-
+        
     def confirm():
-        confirm_complete = input(f"Are you sure you want to complete task {index_to_complete}? y/n\n").lower()
+        """
+        Nested function to allow for looping if the confirm input does not match 'y' or 'n'.
+        """
+        confirm_complete = input(f"Are you sure you want to complete task {task_index}? y/n\n").lower()
         if confirm_complete == "y":
-            print(f"Completing task {index_to_complete}...")
+            print(f"Completing task {task_index}...")
             completed_sheet = SHEET.worksheet("Completed")
             today_date = datetime.datetime.now().date()
-            to_completed_sheet = TO_DO_SHEET.row_values(index_to_complete + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
+            to_completed_sheet = TO_DO_SHEET.row_values(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             
             to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
             completed_sheet.append_row(to_completed_sheet)
-            TO_DO_SHEET.delete_rows(index_to_complete + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
+            TO_DO_SHEET.delete_rows(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task completed successfully\n")
             edit_list()
 
@@ -216,19 +229,18 @@ def remove_task():
     delete that row from the sheet.
     Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
-    try:
-        index_to_remove = int(input("Which task (index) would you like to remove?\n"))
-        if index_to_remove < 1:
-            raise ValueError
-    except ValueError:
-        print("That is not a valid number. Has to be a number, that is bigger than 0.")
-        remove_task()
+    task_index = validate_index_input()
+    if task_index == False:
+       remove_task()
 
     def confirm():
-        confirm_remove = input(f"Are you sure you want to remove task {index_to_remove}? y/n\n").lower()
+        """
+        Nested function to allow for looping if the confirm input does not match 'y' or 'n'.
+        """
+        confirm_remove = input(f"Are you sure you want to remove task {task_index}? y/n\n").lower()
         if confirm_remove == "y":
-            print(f"Removing task {index_to_remove}...")
-            TO_DO_SHEET.delete_rows(index_to_remove + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
+            print(f"Removing task {task_index}...")
+            TO_DO_SHEET.delete_rows(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task removed successfully\n")
             edit_list()
 
