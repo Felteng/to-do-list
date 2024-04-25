@@ -42,6 +42,56 @@ def get_completed_list():
     return tasks, deadlines, time_completed
 
 
+def validate_index_input(action):
+    """
+    Call this function for any action that needs the user to select an index to access.
+    Raise ValueError if the index input is smaller than 1 or if it's not a number.
+    """    
+    try:
+        task_index = int(input(f"Which task index would you like to {action}?\n"))
+        if task_index < 1:
+            raise ValueError
+        return task_index
+    except ValueError:
+        print("That is not a valid number. Has to be a number, that is bigger than 0.")
+        return False
+
+
+def validate_date_input(action):
+    """
+    Call this function whenever user is expected to provide a deadline.
+    Checks if the date is in the correct format for consistency.
+    Checks if the date is valid in the sense that it has not already passed.
+    """
+    validated = False
+    while validated == False:
+        try:
+            if action == "update":
+                deadline = input("Update deadline (yyyy-mm-dd) to:\n")
+
+            elif action == "add":
+                deadline = input("Task deadline (yyyy-mm-dd):\n")
+
+            date_input = datetime.datetime.strptime(deadline, "%Y-%m-%d") # Parse deadline string into datetime object for comparing and format testing.
+
+            """Fetch current date and turn it into a string with the correct format using strftime(),
+            then turn it back into an object with strptime to compare against date_input"""
+            date_now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d"), "%Y-%m-%d") 
+
+            if date_input < date_now:
+                raise Exception("That date has already passed")
+
+            validated = True
+
+        except ValueError:
+            print(f"{deadline} does not match format: yyyy-mm-dd")
+            
+        except Exception as e:
+            print(f"{e}")
+
+    return deadline    
+
+
 def user_decision():
     """
     Ask the user what they wish to see from the spreadsheet.
@@ -120,21 +170,6 @@ def edit_list():
         edit_list()
 
 
-def validate_index_input():
-    """
-    Call this function for any action that needs the user to select an index to access.
-    Raise ValueError if the index input is smaller than 1 or if it's not a number.
-    """    
-    try:
-        task_index = int(input("Which task index would you like to edit?\n"))
-        if task_index < 1:
-            raise ValueError
-        return task_index
-    except ValueError:
-        print("That is not a valid number. Has to be a number, that is bigger than 0.")
-        return False
-
-
 
 def edit_task():
     """
@@ -142,7 +177,7 @@ def edit_task():
     Let the user provide new input to update the relevant cells.
 
     """
-    task_index = validate_index_input()
+    task_index = validate_index_input("edit")
     if task_index == False:
        edit_task()
     task_index += 1 # Add a value of 1 here since actual row 1 in the sheet has the headings
@@ -154,13 +189,13 @@ def edit_task():
         print("Task updated successfully\n")
         
     elif cell_to_edit == "deadline":
-        new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
+        new_deadline = validate_date_input("update")
         TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
         print("Deadline updated successfully\n")
 
     elif cell_to_edit == "both":
         new_task = input("Update task to:\n")
-        new_deadline = input("Update deadline (yyyy-mm-dd) to:\n")
+        new_deadline = validate_date_input("update")
         TO_DO_SHEET.update_cell(task_index, 1, new_task)
         TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
         print("Task and deadline updated successfully\n")
@@ -179,7 +214,7 @@ def add_task():
     the new task to the sheet.
     """
     task = input("Task to be added:\n")
-    deadline = input("Task deadline in yyyy-mm-dd:\n")
+    deadline = validate_date_input("add")
     print("Adding task...")
     TO_DO_SHEET.append_row([task, deadline])
     print("Task added successfully\n")
@@ -192,7 +227,7 @@ def complete_task():
     task was completed added.
     Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
-    task_index = validate_index_input()
+    task_index = validate_index_input("complete")
     if task_index == False:
         complete_task()
         
@@ -229,7 +264,7 @@ def remove_task():
     delete that row from the sheet.
     Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
-    task_index = validate_index_input()
+    task_index = validate_index_input("remove")
     if task_index == False:
        remove_task()
 
