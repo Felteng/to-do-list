@@ -3,22 +3,24 @@ import datetime
 from google.oauth2.service_account import Credentials
 from prettytable import PrettyTable
 
-# SCOPE and credentials code from Code Institutes Love Sandwiches project
 
+# Global variables
+
+# SCOPE and credentials code from Code Institutes Love Sandwiches project
+# Code Institute code
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
     "https://www.googleapis.com/auth/drive"
     ]
 
-# Global variables
-### Code Institute code ###
 CREDS = Credentials.from_service_account_file("creds.json")
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPEAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPEAD_CLIENT.open("to_do_list")
-### Code institute code ends here ###
+# Code institute code ends here
 TO_DO_SHEET = SHEET.worksheet("To-do")
+
 
 def get_to_do_list():
     """
@@ -28,7 +30,7 @@ def get_to_do_list():
     tasks = TO_DO_SHEET.col_values(1)
     deadlines = TO_DO_SHEET.col_values(2)
     return tasks, deadlines
-    
+
 
 def get_completed_list():
     """
@@ -46,7 +48,7 @@ def validate_index_input(action):
     """
     Call this function for any action that needs the user to select an index to access.
     Raise ValueError if the index input is smaller than 1 or if it's not a number.
-    """    
+    """
     try:
         task_index = int(input(f"Which task index would you like to {action}?\n"))
         if task_index < 1:
@@ -64,7 +66,7 @@ def validate_date_input(action):
     Checks if the date is valid in the sense that it has not already passed.
     """
     validated = False
-    while validated == False:
+    while validated is False:
         try:
             if action == "update":
                 deadline = input("Update deadline (yyyy-mm-dd) to:\n")
@@ -72,11 +74,11 @@ def validate_date_input(action):
             elif action == "add":
                 deadline = input("Task deadline (yyyy-mm-dd):\n")
 
-            date_input = datetime.datetime.strptime(deadline, "%Y-%m-%d") # Parse deadline string into datetime object for comparing and format testing.
+            date_input = datetime.datetime.strptime(deadline, "%Y-%m-%d")  # Parse deadline string into datetime object for comparing and format testing.
 
             """Fetch current date and turn it into a string with the correct format using strftime(),
             then turn it back into an object with strptime to compare against date_input"""
-            date_now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d"), "%Y-%m-%d") 
+            date_now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d"), "%Y-%m-%d")
 
             if date_input < date_now:
                 raise Exception("That date has already passed")
@@ -85,11 +87,11 @@ def validate_date_input(action):
 
         except ValueError:
             print(f"{deadline} does not match format: yyyy-mm-dd")
-            
+
         except Exception as e:
             print(f"{e}")
 
-    return deadline    
+    return deadline
 
 
 def user_decision():
@@ -105,7 +107,7 @@ def user_decision():
         display_to_do_list()
         edit_decision_made = False
 
-        while edit_decision_made == False:
+        while edit_decision_made is False:
             edit_decision = input("Would you like to edit the list? y/n\n").lower()
             if edit_decision == "y":
                 edit_decision_made = True
@@ -136,7 +138,7 @@ def display_to_do_list():
     table = PrettyTable(["Index", "Task", "Deadline"])
 
     index = 1
-    for task, deadline in zip(tasks[1:], deadlines[1:]): # Start from 2nd item in list to avoid printing the spreadsheet headings.
+    for task, deadline in zip(tasks[1:], deadlines[1:]):  # Start from 2nd item in list to avoid printing the spreadsheet headings.
         table.add_row([index, task, deadline])
         index += 1
     print(table)
@@ -151,7 +153,7 @@ def display_completed_list():
     table = PrettyTable(["Index", "Task", "Deadline", "Completed"])
 
     index = 1
-    for task, deadline, time in zip(tasks[1:], deadlines[1:], times[1:]): # Start from 2nd item in list to avoid printing the spreadsheet headings.
+    for task, deadline, time in zip(tasks[1:], deadlines[1:], times[1:]):  # Start from 2nd item in list to avoid printing the spreadsheet headings.
         table.add_row([index, task, deadline, time])
         index += 1
     print(table)
@@ -171,7 +173,7 @@ def edit_list():
 
     elif edit_type == "add":
         add_task()
-        
+
     elif edit_type == "complete":
         complete_task()
 
@@ -186,7 +188,6 @@ def edit_list():
         edit_list()
 
 
-
 def edit_task():
     """
     Ask the user which row in the list they would like to edit.
@@ -194,16 +195,16 @@ def edit_task():
 
     """
     task_index = validate_index_input("edit")
-    if task_index == False:
-       edit_task()
-    task_index += 1 # Add a value of 1 here since actual row 1 in the sheet has the headings
+    if task_index is False:
+        edit_task()
+    task_index += 1  # Add a value of 1 here since actual row 1 in the sheet has the headings
 
     cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
     if cell_to_edit == "task":
         new_task = input("Update task to:\n")
         TO_DO_SHEET.update_cell(task_index, 1, new_task)
         print("Task updated successfully\n")
-        
+
     elif cell_to_edit == "deadline":
         new_deadline = validate_date_input("update")
         TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
@@ -219,7 +220,7 @@ def edit_task():
     else:
         input(f"Did not recognize '{cell_to_edit}'. Did you type that correctly?\nPress enter to try again")
         edit_task()
-        
+
     display_to_do_list()
     edit_list()
 
@@ -237,6 +238,7 @@ def add_task():
     display_to_do_list()
     edit_list()
 
+
 def complete_task():
     """
     Ask the user which task should be completed and append
@@ -245,9 +247,9 @@ def complete_task():
     Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
     task_index = validate_index_input("complete")
-    if task_index == False:
+    if task_index is False:
         complete_task()
-        
+
     def confirm():
         """
         Nested function to allow for looping if the confirm input does not match 'y' or 'n'.
@@ -257,11 +259,11 @@ def complete_task():
             print(f"Completing task {task_index}...")
             completed_sheet = SHEET.worksheet("Completed")
             today_date = datetime.datetime.now().date()
-            to_completed_sheet = TO_DO_SHEET.row_values(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
-            
-            to_completed_sheet.append(str(today_date)) # Add the date this function was carried out to the completed history sheet.
+            to_completed_sheet = TO_DO_SHEET.row_values(task_index + 1)  # Add a value of 1 here since actual row 1 in the sheet has the headings
+
+            to_completed_sheet.append(str(today_date))  # Add the date this function was carried out to the completed history sheet.
             completed_sheet.append_row(to_completed_sheet)
-            TO_DO_SHEET.delete_rows(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
+            TO_DO_SHEET.delete_rows(task_index + 1)  # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task completed successfully\n")
             display_to_do_list()
             edit_list()
@@ -273,7 +275,7 @@ def complete_task():
             input(f"Did not recognize {confirm_complete}, did you type 'y' or 'n'?\nPress enter to try again")
             confirm()
 
-    confirm() 
+    confirm()
 
 
 def remove_task():
@@ -283,8 +285,8 @@ def remove_task():
     Raise ValueError if the index input is smaller than 1 or if it's not a number.
     """
     task_index = validate_index_input("remove")
-    if task_index == False:
-       remove_task()
+    if task_index is False:
+        remove_task()
 
     def confirm():
         """
@@ -293,7 +295,7 @@ def remove_task():
         confirm_remove = input(f"Are you sure you want to remove task {task_index}? y/n\n").lower()
         if confirm_remove == "y":
             print(f"Removing task {task_index}...")
-            TO_DO_SHEET.delete_rows(task_index + 1) # Add a value of 1 here since actual row 1 in the sheet has the headings
+            TO_DO_SHEET.delete_rows(task_index + 1)  # Add a value of 1 here since actual row 1 in the sheet has the headings
             print("Task removed successfully\n")
             display_to_do_list()
             edit_list()
@@ -310,4 +312,3 @@ def remove_task():
 
 print("Welcome back to your To-do List!\n")
 user_decision()
-
