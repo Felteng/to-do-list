@@ -1,5 +1,5 @@
 import gspread
-import datetime
+from datetime import datetime
 from google.oauth2.service_account import Credentials
 from prettytable import PrettyTable
 
@@ -83,13 +83,13 @@ def validate_date_input(action):
             """Parse deadline string into datetime object
             for comparing and format testing.
             """
-            date_input = datetime.datetime.strptime(deadline, "%Y-%m-%d")
+            date_input = datetime.strptime(deadline, "%Y-%m-%d")
 
             """Get current date and parse it to a string with the right format
             using strftime(), then parse it back into an object
             with strptime to compare against date_input.
             """
-            date_now = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d"), "%Y-%m-%d")
+            date_now = datetime.strptime(datetime.now().strftime("%Y-%m-%d"), "%Y-%m-%d")
 
             if date_input < date_now:
                 raise Exception("That date has already passed")
@@ -269,14 +269,14 @@ def complete_task():
         if confirm_complete == "y":
             print(f"Completing task {task_index}...")
             completed_sheet = SHEET.worksheet("Completed")
-            today_date = datetime.datetime.now().date()
-            to_completed_sheet = TO_DO_SHEET.row_values(task_index + 1)  # Add a value of 1 here since actual row 1 in the sheet has the headings
+            today_date = datetime.now().date()
+            to_completed_sheet = TO_DO_SHEET.row_values(task_index + 1)  # Add 1 since row 1 in the sheet has the headings
             """Add the date this function was carried out
             to the completed history sheet.
             """
             to_completed_sheet.append(str(today_date))
             completed_sheet.append_row(to_completed_sheet)
-            TO_DO_SHEET.delete_rows(task_index + 1)  # Add a value of 1 here since actual row 1 in the sheet has the headings
+            TO_DO_SHEET.delete_rows(task_index + 1)  # Add 1 since row 1 in the sheet has the headings
             print("Task completed successfully\n")
             display_to_do_list()
             edit_list()
