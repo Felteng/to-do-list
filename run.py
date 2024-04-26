@@ -55,14 +55,18 @@ def validate_index_input(action):
     Raise ValueError if the index input is smaller than 1
     or if it's not a number.
     """
-    try:
-        task_index = int(input(f"Which task index would you like to {action}?\n"))
-        if task_index < 1:
-            raise ValueError
-        return task_index
-    except ValueError:
-        print("That is not a valid number. Has to be a number, that is bigger than 0.")
-        return False
+    chosen = False
+    while chosen is False:
+        try:
+            task_index = int(input(f"Which task index would you like to {action}?\n"))
+            if task_index < 1:
+                raise ValueError
+
+            chosen = True
+            return task_index
+
+        except ValueError:
+            print("That is not a valid number. Has to be a number, that is bigger than 0.")
 
 
 def validate_date_input(action):
@@ -92,15 +96,12 @@ def validate_date_input(action):
             date_now = datetime.strptime(datetime.now().strftime("%Y-%m-%d"), "%Y-%m-%d")
 
             if date_input < date_now:
-                raise Exception("That date has already passed")
+                print("That date has already passed")
 
             validated = True
 
         except ValueError:
             print(f"{deadline} does not match format: yyyy-mm-dd")
-
-        except Exception as e:
-            print(f"{e}")
 
     return deadline
 
@@ -260,8 +261,6 @@ def complete_task():
     task was completed added.
     """
     task_index = validate_index_input("complete")
-    if task_index is False:
-        complete_task()
 
     def confirm():
         """Nested function to allow for looping
@@ -298,8 +297,6 @@ def remove_task():
     delete that row from the sheet.
     """
     task_index = validate_index_input("remove")
-    if task_index is False:
-        remove_task()
 
     def confirm():
         """Nested function to allow for looping
@@ -328,4 +325,5 @@ def remove_task():
 
 
 print("Welcome back to your To-do List!\n")
-user_decision()
+#user_decision()
+remove_task()
