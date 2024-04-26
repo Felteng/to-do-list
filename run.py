@@ -101,7 +101,25 @@ def validate_date_input(action):
             print(f"{deadline} does not match format: yyyy-mm-dd")
 
 
+def validate_task_input():
+    """Call this function whenever an input for a task is needed.
+    
+    Valdidates the length of the task string to avoid bugs in the table
+    """
+    print("If description is longer than 50 characters it will be cut to 50.")
+    task = input("Task description:\n")
+    if len(task) > 50:
+        print("Task description cut down.")
+        task = task[:50]
+
+    return task
+
+
 def confirm_action(action, task_index):
+    """Call this function when confirmation of choice is relevant.
+
+    Asks the user if they're sure about the action on the selected index.
+    """
     while True:
         confirm = input(f"Are you sure you want to {action} task {task_index}? y/n\n").lower()
         if confirm == "y" or confirm == "yes":
@@ -230,7 +248,7 @@ def edit_task():
     while True:
         cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
         if cell_to_edit == "task":
-            new_task = input("Update task to:\n")
+            new_task = validate_task_input()
             TO_DO_SHEET.update_cell(task_index, 1, new_task)
             print("Task updated successfully\n")
             break
@@ -242,7 +260,7 @@ def edit_task():
             break
 
         elif cell_to_edit == "both":
-            new_task = input("Update task to:\n")
+            new_task = validate_task_input()
             new_deadline = validate_date_input("update")
             TO_DO_SHEET.update_cell(task_index, 1, new_task)
             TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
@@ -260,7 +278,7 @@ def add_task():
     """Ask the user for a task description and task deadline to append
     the new task to the sheet.
     """
-    task = input("Task to be added:\n")
+    task = validate_task_input()
     deadline = validate_date_input("add")
     print("Adding task...")
     TO_DO_SHEET.append_row([task, deadline])
