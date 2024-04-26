@@ -57,11 +57,13 @@ def validate_index_input(action):
     """
     while True:
         try:
-            task_index = int(input(f"Which task index would you like to {action}?\n"))
-            if task_index < 1:
+            index = int(input(f"Which index would you like to {action}?\n"))
+            if index < 1:
                 raise ValueError
 
-            return task_index
+            index_content = validate_content_presence(index)
+            if index_content is True:
+                return index
 
         except ValueError:
             print("That is not a valid number. Has to be a number, that is bigger than 0.")
@@ -103,22 +105,49 @@ def validate_date_input(action):
 
 def validate_task_input():
     """Call this function whenever an input for a task is needed.
-    
+   
     Valdidates the length of the task string to avoid bugs in the table
+    and assures ANY letter input is given with .lower().islower()
     """
-    print("If description is longer than 50 characters it will be cut to 50.")
-    task = input("Task description:\n")
-    if len(task) > 50:
-        print("Task description cut down.")
-        task = task[:50]
+    while True:
+        print("If description is longer than 50 characters it will be cut to 50.")
+        task = input("Task description:\n")
+        if len(task) > 50:
+            task = task[:50]
+            print("Task description cut down.")
+            break
+
+        elif not task.lower().islower():
+            print("Please provide a decscription.")
+
+        elif len(task) < 50:
+            break
 
     return task
+
+
+def validate_content_presence(index):
+    """Whenever user provides an index this function checks if the index
+    has any content. Returns True if yes it does, alert user if it does not.
+
+    Add 1 to index to account for sheet headings.
+
+    Since the user HAS to provide a task and deadline to a task the content
+    will be valid if the row is NOT empty.
+    """
+    row_values = TO_DO_SHEET.row_values(index + 1)
+    if row_values == []:
+        print(f"Index {index} has no data.")
+
+    else:
+        return True
 
 
 def confirm_action(action, task_index):
     """Call this function when confirmation of choice is relevant.
 
-    Asks the user if they're sure about the action on the selected index.
+    Asks the user if they're sure about the action on the selected index
+    and returns the choice made.
     """
     while True:
         confirm = input(f"Are you sure you want to {action} task {task_index}? y/n\n").lower()
@@ -288,7 +317,7 @@ def add_task():
 
 
 def complete_task():
-    """Ask the user which task index they would like to complete.
+    """Ask the user which index they would like to complete.
 
     Get confirmation if the index is correct, if user is not sure,
     return to edit_list(), if user is sure, proceed with completion.
@@ -316,7 +345,7 @@ def complete_task():
 
 
 def remove_task():
-    """Ask the user which task index they would like to remove.
+    """Ask the user which index they would like to remove.
 
     Get confirmation if the index is correct, if user is sure,
     proceed with removal, if user is not sure return to edit_list().
