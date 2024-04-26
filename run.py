@@ -20,6 +20,7 @@ GSPEAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPEAD_CLIENT.open("to_do_list")
 # Code institute code ends here
 TO_DO_SHEET = SHEET.worksheet("To-do")
+COMPLETED_SHEET = SHEET.worksheet("Completed")
 
 
 def get_to_do_list():
@@ -41,10 +42,9 @@ def get_completed_list():
     Return the 3 as 3 separate lists to allow
     looping through them to print the table.
     """
-    completed_sheet = SHEET.worksheet("Completed")
-    tasks = completed_sheet.col_values(1)
-    deadlines = completed_sheet.col_values(2)
-    time_completed = completed_sheet.col_values(3)
+    tasks = COMPLETED_SHEET.col_values(1)
+    deadlines = COMPLETED_SHEET.col_values(2)
+    time_completed = COMPLETED_SHEET.col_values(3)
     return tasks, deadlines, time_completed
 
 
@@ -104,6 +104,18 @@ def validate_date_input(action):
             print(f"{deadline} does not match format: yyyy-mm-dd")
 
     return deadline
+
+def confirm_action(action, task_index):
+    while True:
+        confirm = input(f"Are you sure you want to {action} task {task_index}? y/n\n").lower()
+        if confirm == "y" or confirm == "yes":
+            return "y"
+
+        elif confirm == "n" or confirm == "no":
+            return "n"
+
+        else:
+            print(f"Did not recognize '{confirm}'.")
 
 
 def user_decision():
@@ -256,72 +268,57 @@ def add_task():
 
 
 def complete_task():
-    """Ask the user which task should be completed and append
-    that task to the 'Completed' sheet with the date the
-    task was completed added.
+    """Ask the user which task index they would like to complete.
+
+    Get confirmation if the index is correct, if user is not sure,
+    return to edit_list(), if user is sure, proceed with completion.
+
+    Add a value of 1 to task_index when changing a sheet
+    since row 1 in the sheet has the headings.
+
+    Add the date this function was carried out to the completed history sheet.
     """
     task_index = validate_index_input("complete")
+    confirm = confirm_action("complete", task_index)
+    if confirm == "y":
+        print(f"Completing task {task_index}...")
+        today_date = datetime.now().date()
+        to_completed_sheet = TO_DO_SHEET.row_values(task_index + 1)
 
-    def confirm():
-        """Nested function to allow for looping
-        if the confirm input does not match 'y' or 'n'.
-        """
-        confirm_complete = input(f"Are you sure you want to complete task {task_index}? y/n\n").lower()
-        if confirm_complete == "y":
-            print(f"Completing task {task_index}...")
-            completed_sheet = SHEET.worksheet("Completed")
-            today_date = datetime.now().date()
-            to_completed_sheet = TO_DO_SHEET.row_values(task_index + 1)  # Add 1 since row 1 in the sheet has the headings
-            """Add the date this function was carried out
-            to the completed history sheet.
-            """
-            to_completed_sheet.append(str(today_date))
-            completed_sheet.append_row(to_completed_sheet)
-            TO_DO_SHEET.delete_rows(task_index + 1)  # Add 1 since row 1 in the sheet has the headings
-            print("Task completed successfully\n")
-            display_to_do_list()
-            edit_list()
+        to_completed_sheet.append(str(today_date))
+        COMPLETED_SHEET.append_row(to_completed_sheet)
+        TO_DO_SHEET.delete_rows(task_index + 1)
 
-        elif confirm_complete == "n":
-            edit_list()
-
-        else:
-            input(f"Did not recognize '{confirm_complete}', did you type 'y' or 'n'?\nPress enter to try again")
-            confirm()
-
-    confirm()
+        print("Task completed successfully\n")
+        display_to_do_list()
+        edit_list()
+    
+    else:
+        edit_list()
 
 
 def remove_task():
-    """Ask the user which task they would like to have removed and
-    delete that row from the sheet.
+    """Ask the user which task index they would like to remove.
+
+    Get confirmation if the index is correct, if user is sure,
+    proceed with removal, if user is not sure return to edit_list().
+
+    Add a value of 1 to task_index when changing the sheet
+    since row 1 in the sheet has the headings.
     """
     task_index = validate_index_input("remove")
-
-    def confirm():
-        """Nested function to allow for looping
-        if the confirm input does not match 'y' or 'n'.
-        """
-        confirm_remove = input(f"Are you sure you want to remove task {task_index}? y/n\n").lower()
-        if confirm_remove == "y":
-            print(f"Removing task {task_index}...")
-            """Add a value of 1 here
-            since row 1 in the sheet has the headings.
-            """
-            TO_DO_SHEET.delete_rows(task_index + 1)
-            print("Task removed successfully\n")
-            display_to_do_list()
-            edit_list()
-
-        elif confirm_remove == "n":
-            edit_list()
-
-        else:
-            input(f"Did not recognize '{confirm_remove}', did you type 'y' or 'n'?\nPress enter to try again")
-
-            confirm()
-
-    confirm()
+    confirm = confirm_action("remove", task_index)
+    if confirm == "y":
+        print(f"Removing task {task_index}...")
+        TO_DO_SHEET.delete_rows(task_index + 1)
+        print("Task removed successfully\n")
+        
+        display_to_do_list()
+        edit_list()
+        
+    else:
+        display_to_do_list()
+        edit_list()
 
 
 print("Welcome back to your To-do List!\n")
