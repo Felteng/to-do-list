@@ -127,20 +127,17 @@ def user_decision():
     user_input = input("Enter your command here:\n").lower()
     if user_input == "view":
         display_to_do_list()
-        edit_decision_made = False
 
-        while edit_decision_made is False:
+        while True:
             edit_decision = input("Would you like to edit the list? y/n\n").lower()
             if edit_decision == "y":
-                edit_decision_made = True
                 edit_list()
 
             elif edit_decision == "n":
-                edit_decision_made = True
                 user_decision()
 
             else:
-                input(f"Did not recognize '{edit_decision}'. Did you type 'y' or 'n'?\nPress enter to try again")
+                print(f"Did not recognize '{edit_decision}'.")
 
     elif user_input == "history":
         display_completed_list()
