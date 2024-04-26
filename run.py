@@ -25,7 +25,7 @@ TO_DO_SHEET = SHEET.worksheet("To-do")
 def get_to_do_list():
     """Retrieve the tasks and their respective deadlines
     from the to_do_list spreadsheet.
-    
+
     Return them both as 2 separate lists to allow
     looping through them to print the table.
     """
@@ -35,7 +35,7 @@ def get_to_do_list():
 
 
 def get_completed_list():
-    """Retrieve the data from all 3 columns in the completed sheet 
+    """Retrieve the data from all 3 columns in the completed sheet
     to allow for iteration and display to the user.
 
     Return the 3 as 3 separate lists to allow
@@ -107,7 +107,7 @@ def validate_date_input(action):
 
 def user_decision():
     """Ask the user what they wish to see from the spreadsheet.
-    
+
     If the input in user_input was faulty,
     alert the user and allow a new attempt.
 
@@ -300,13 +300,13 @@ def remove_task():
         remove_task()
 
     def confirm():
-        """Nested function to allow for looping 
+        """Nested function to allow for looping
         if the confirm input does not match 'y' or 'n'.
         """
         confirm_remove = input(f"Are you sure you want to remove task {task_index}? y/n\n").lower()
         if confirm_remove == "y":
             print(f"Removing task {task_index}...")
-            """Add a value of 1 here 
+            """Add a value of 1 here
             since row 1 in the sheet has the headings.
             """
             TO_DO_SHEET.delete_rows(task_index + 1)
