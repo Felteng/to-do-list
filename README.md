@@ -24,11 +24,23 @@ The goal with this project is largely to allow more learning by coding and creat
 
 ### Frameworks and libraries
 - Google Cloud - Setting up API connections.
+
 - GSpread - Manipulation of the spreadsheet holding the task information.
+
 - PrettyTable - Printing a comprehenisive table to the terminal.
+
 - OAuth2 - Authenticating credentials for API.
+
 - Flake8 - In IDE linter.
+
 - CI Python Linter - External linter for live adjustments.
+
+### Development
+- Git - Version control system.
+
+- GitHub - Hosting and storing Git repository.
+
+- Gitpod - IDE for writing all the code.
 
 ## Testing
 
