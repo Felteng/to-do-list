@@ -151,7 +151,8 @@ def display_to_do_list():
     table = PrettyTable(["Index", "Task", "Deadline"])
 
     index = 1
-    for task, deadline in zip(tasks[1:], deadlines[1:]):  # Start from 2nd item in list to avoid printing the spreadsheet headings.
+    """Start from 2nd index in list to avoid the spreadsheet headings."""
+    for task, deadline in zip(tasks[1:], deadlines[1:]):
         table.add_row([index, task, deadline])
         index += 1
     print(table)
@@ -166,7 +167,8 @@ def display_completed_list():
     table = PrettyTable(["Index", "Task", "Deadline", "Completed"])
 
     index = 1
-    for task, deadline, time in zip(tasks[1:], deadlines[1:], times[1:]):  # Start from 2nd item in list to avoid printing the spreadsheet headings.
+    """Start from 2nd index in list to avoid the spreadsheet headings."""
+    for task, deadline, time in zip(tasks[1:], deadlines[1:], times[1:]):
         table.add_row([index, task, deadline, time])
         index += 1
     print(table)
