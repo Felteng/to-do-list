@@ -55,14 +55,12 @@ def validate_index_input(action):
     Raise ValueError if the index input is smaller than 1
     or if it's not a number.
     """
-    chosen = False
-    while chosen is False:
+    while True:
         try:
             task_index = int(input(f"Which task index would you like to {action}?\n"))
             if task_index < 1:
                 raise ValueError
 
-            chosen = True
             return task_index
 
         except ValueError:
@@ -76,8 +74,7 @@ def validate_date_input(action):
 
     Checks if the date is valid in the sense that it has not already passed.
     """
-    validated = False
-    while validated is False:
+    while True:
         try:
             if action == "update":
                 deadline = input("Update deadline (yyyy-mm-dd) to:\n")
@@ -97,13 +94,12 @@ def validate_date_input(action):
 
             if date_input < date_now:
                 print("That date has already passed")
-
-            validated = True
+            else:
+                return deadline
 
         except ValueError:
             print(f"{deadline} does not match format: yyyy-mm-dd")
 
-    return deadline
 
 def confirm_action(action, task_index):
     while True:
@@ -151,7 +147,7 @@ def user_decision():
         user_decision()
 
     else:
-        input(f"Invalid command.. You entered: '{user_input}'. Did you type the command correctly?\nPress enter to try again")
+        print(f"Invalid command.. You entered: '{user_input}'.")
         user_decision()
 
 
@@ -195,7 +191,14 @@ def edit_list():
 
     If the input does not match options alert user and allow another attempt.
     """
-    edit_type = input("Type 'edit' to edit a list item\nType 'add' to add an item to the list\nType 'complete' to complete a task\nType 'remove' to remove an item from the list\nOr type 'none' to stop editing\n").lower()
+    edit_type = input("""
+Type 'edit' to edit a list item
+Type 'add' to add an item to the list
+Type 'complete' to complete a task
+Type 'remove' to remove an item from the list
+Or type 'none' to stop editing
+""").lower()
+
     print("")
     if edit_type == "edit":
         edit_task()
@@ -213,42 +216,44 @@ def edit_list():
         user_decision()
 
     else:
-        input(f"Did not recognize '{edit_type}'. Did you type that correctly?\nPress enter to try again")
+        print(f"Did not recognize '{edit_type}'.")
         edit_list()
 
 
 def edit_task():
     """Ask the user which row in the list they would like to edit.
 
+    Add 1 to task_index since row 1 in the sheet has the headings.
+
     Let the user provide new input to update the relevant cells.
     """
     task_index = validate_index_input("edit")
-    if task_index is False:
-        edit_task()
-    """Add a value of 1 here since row 1 in the sheet has the headings"""
     task_index += 1
 
-    cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
-    if cell_to_edit == "task":
-        new_task = input("Update task to:\n")
-        TO_DO_SHEET.update_cell(task_index, 1, new_task)
-        print("Task updated successfully\n")
+    while True:
+        cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
+        if cell_to_edit == "task":
+            new_task = input("Update task to:\n")
+            TO_DO_SHEET.update_cell(task_index, 1, new_task)
+            print("Task updated successfully\n")
+            break
 
-    elif cell_to_edit == "deadline":
-        new_deadline = validate_date_input("update")
-        TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
-        print("Deadline updated successfully\n")
+        elif cell_to_edit == "deadline":
+            new_deadline = validate_date_input("update")
+            TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
+            print("Deadline updated successfully\n")
+            break
 
-    elif cell_to_edit == "both":
-        new_task = input("Update task to:\n")
-        new_deadline = validate_date_input("update")
-        TO_DO_SHEET.update_cell(task_index, 1, new_task)
-        TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
-        print("Task and deadline updated successfully\n")
+        elif cell_to_edit == "both":
+            new_task = input("Update task to:\n")
+            new_deadline = validate_date_input("update")
+            TO_DO_SHEET.update_cell(task_index, 1, new_task)
+            TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
+            print("Task and deadline updated successfully\n")
+            break
 
-    else:
-        input(f"Did not recognize '{cell_to_edit}'. Did you type that correctly?\nPress enter to try again")
-        edit_task()
+        else:
+            print(f"Did not recognize '{cell_to_edit}'.")
 
     display_to_do_list()
     edit_list()
@@ -290,11 +295,9 @@ def complete_task():
         TO_DO_SHEET.delete_rows(task_index + 1)
 
         print("Task completed successfully\n")
-        display_to_do_list()
-        edit_list()
-    
-    else:
-        edit_list()
+
+    display_to_do_list()
+    edit_list()
 
 
 def remove_task():
@@ -312,15 +315,10 @@ def remove_task():
         print(f"Removing task {task_index}...")
         TO_DO_SHEET.delete_rows(task_index + 1)
         print("Task removed successfully\n")
-        
-        display_to_do_list()
-        edit_list()
-        
-    else:
-        display_to_do_list()
-        edit_list()
+
+    display_to_do_list()
+    edit_list()
 
 
 print("Welcome back to your To-do List!\n")
-#user_decision()
-remove_task()
+user_decision()
