@@ -66,35 +66,30 @@ def validate_index_input(action):
                 return index
 
         except ValueError:
-            print("That is not a valid number. Has to be a number, that is bigger than 0.")
+            print(
+                "That is not a valid number."
+                "Has to be a number, that is bigger than 0."
+            )
 
 
-def validate_date_input(action):
+def validate_date_input():
     """Call this function whenever user is expected to provide a deadline.
-
     Checks if the date is in the correct format for consistency.
-
     Checks if the date is valid in the sense that it has not already passed.
+
+    Parse deadline string into datetime object to compare and test format.
+    Get current date and convert it to a string, then parse it back
+    into a datetime object with strptime to compare against date_input.
     """
     while True:
         try:
-            if action == "update":
-                deadline = input("Update deadline (yyyy-mm-dd) to:\n")
+            deadline = input("Task deadline (yyyy-mm-dd):\n")
 
-            elif action == "add":
-                deadline = input("Task deadline (yyyy-mm-dd):\n")
-            """Parse deadline string into datetime object
-            for comparing and format testing.
-            """
             date_input = datetime.strptime(deadline, "%Y-%m-%d")
 
-            """Get current date and parse it to a string with the right format
-            using strftime(), then parse it back into an object
-            with strptime to compare against date_input.
-            """
-            date_now = datetime.strptime(datetime.now().strftime("%Y-%m-%d"), "%Y-%m-%d")
+            date_now = str(datetime.now().date())
 
-            if date_input < date_now:
+            if date_input < datetime.strptime(date_now, "%Y-%m-%d"):
                 print("That date has already passed")
             else:
                 return deadline
@@ -105,12 +100,14 @@ def validate_date_input(action):
 
 def validate_task_input():
     """Call this function whenever an input for a task is needed.
-   
+
     Valdidates the length of the task string to avoid bugs in the table
     and assures ANY letter input is given with .lower().islower()
     """
     while True:
-        print("If description is longer than 50 characters it will be cut to 50.")
+        print(
+            "If description is longer than 50 characters it will be cut to 50."
+        )
         task = input("Task description:\n")
         if len(task) > 50:
             task = task[:50]
@@ -150,7 +147,10 @@ def confirm_action(action, task_index):
     and returns the choice made.
     """
     while True:
-        confirm = input(f"Are you sure you want to {action} task {task_index}? y/n\n").lower()
+        confirm = input(
+            f"Are you sure you want to {action} task {task_index}? y/n\n"
+        ).lower()
+
         if confirm == "y" or confirm == "yes":
             return "y"
 
@@ -170,13 +170,17 @@ def user_decision():
     If user wants to see the to-do list provide a follow-up question
     of whether they would like to edit it as well.
     """
-    print("Type: 'view' to show To-do List.\nType 'history' to show completed tasks.\n")
+    print("""Type: 'view' to show To-do List.\n
+    Type 'history' to show completed tasks.\n""")
     user_input = input("Enter your command here:\n").lower()
     if user_input == "view":
         display_to_do_list()
 
         while True:
-            edit_decision = input("Would you like to edit the list? y/n\n").lower()
+            edit_decision = input(
+                "Do you want to edit the list? y/n\n"
+            ).lower()
+
             if edit_decision == "y":
                 edit_list()
 
@@ -275,7 +279,7 @@ def edit_task():
     task_index += 1
 
     while True:
-        cell_to_edit = input("Would you like to edit 'task', 'deadline', or 'both'?\n").lower()
+        cell_to_edit = input("Edit 'task', 'deadline', or 'both'?\n").lower()
         if cell_to_edit == "task":
             new_task = validate_task_input()
             TO_DO_SHEET.update_cell(task_index, 1, new_task)
@@ -283,14 +287,14 @@ def edit_task():
             break
 
         elif cell_to_edit == "deadline":
-            new_deadline = validate_date_input("update")
+            new_deadline = validate_date_input()
             TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
             print("Deadline updated successfully\n")
             break
 
         elif cell_to_edit == "both":
             new_task = validate_task_input()
-            new_deadline = validate_date_input("update")
+            new_deadline = validate_date_input()
             TO_DO_SHEET.update_cell(task_index, 1, new_task)
             TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
             print("Task and deadline updated successfully\n")
@@ -308,7 +312,7 @@ def add_task():
     the new task to the sheet.
     """
     task = validate_task_input()
-    deadline = validate_date_input("add")
+    deadline = validate_date_input()
     print("Adding task...")
     TO_DO_SHEET.append_row([task, deadline])
     print("Task added successfully\n")
