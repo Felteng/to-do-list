@@ -5,14 +5,41 @@ This program functions as a to-do list which the user may manipulate as they see
 
 ## Table of contents
 
+## The goal
+
+### Goal of the developer
+- ***Create a user-friendly experience through simplicity.***
+    - Utilize simplicity to provide an easy to understand application despite the users experience level.
+
+- ***Develop functionalities essential to a to-do list.***
+    - Identify core functions necessary to manipulate a to-do list, such as adding new tasks and deadlines, updating a task and or deadline, removing redundant tasks, marking tasks as complete, and of course displaying the tasks.
+
+- ***Provide a bug-free user experience.***
+    - Implement functions to validate any input the user is expected to make to avoid bugs when displaying the table of tasks. It also helps the user avoid trying to manipulate a task that does not exist. Any wrongful input will also provide feedback to the user.
+
+- ***Make data provided persist through sessions.***
+    - Integrate google drive and google sheets through the use of an API to provide a source for the data to be stored, so that the user can maintain the to-do list across different sessions and even devices.
+
+- ***Personal development and application of new skills.***
+    - Take advantage of this project as means to learn more about Python, programming libraries, the use of APIs, common programming practices, as well as improving my problem solving skills.
+
+### Goal of the user
+- ***Manage and track everyday tasks.***
+    - Get a scope of important day to day tasks all in one place to avoid stressful situations where a task or deadline gets lost track of.
+
+- ***Look back through time.***
+    - Have the ability to look back in history to see what adn when tasks have been accomplished.
+
+- ***Relish a convenient experience.***
+    - Avoid being plagued by bugs and technical difficulties while using the application, and get meaningful feedback when necessary.
+
 ## User experience
 
 ### User stories
 
 ## Features and planning
 
-### The goal
-The goal with this project is largely to allow more learning by coding and creating a terminal based application, which can be of use for myself. Furthermore it also provides some grounds to familiarize myself with working with APIs. The source code is also there for anyone who would want to build upon it for their own to-do list application, although I don't suspect there's much appeal to that aspect.
+
 
 ### Logic planning
 ![Logic Flowchart](readme-assets/to-do-list-flowchart.png)
