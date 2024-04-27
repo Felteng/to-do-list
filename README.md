@@ -74,6 +74,8 @@ This program functions as a to-do list which the user may manipulate as they see
 ## Testing
 
 ## Deployment
+
+### Live deployment
 The project was deployed to [Heroku](https://felteng-to-do-list-fc4edcc70d21.herokuapp.com/).
 
 After creating my account at Heroku I took the following steps to ensure successful deployment:
@@ -113,5 +115,12 @@ Make sure to push these changes to your repository before deploying.
 15. Deploy manually by choosing a branch to deploy from and click 'Deploy Branch'.
 
 16. I also enabled automatic deploys for whenever a push is made to 'main' branch. This is however optional.
+
+### Local deployment
+
+1. Open a terminal in the workspace.
+
+2. To exectute the program from the file it's written in type:
+    - python name_of_file.py ("run.py" in this projects case).
 
 ## Credits
