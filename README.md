@@ -44,7 +44,33 @@ This program functions as a to-do list which the user may manipulate as they see
 ### Logic planning
 ![Logic Flowchart](readme-assets/to-do-list-flowchart.png)
 
-### Features
+### Current features
+- **List display**
+    - Start by choosing to either view the 'tasks' on to-do list, or to view the 'history' of completed tasks.
+
+- **The to-do list 'tasks'**
+    - This option will display all the tasks yet to completed or removed on the to-do list, with their indices and respective deadlines.
+
+- **The 'history' of completed tasks**
+    - This option will display a table of all the tasks that have been marked as completed, with an added column of when it was completed.
+
+- **Editing the list of tasks**
+    - After choosing to view the to-do list and it's task the user is presented with option to start editing the list.
+
+- **Edit a task on the list**
+    - Choosing 'edit' will let the user pick an index to edit, followed by what should be edited on the chosen index.
+
+- **Add a task to the list**
+    - When adding a task to the list the user gets to provide a description of the task followed by a deadline for the task.
+
+- **Complete task from the list**
+    - Marking a task as complete from the list will move it to the 'history' sheet with all the completed tasks.
+
+- **Removing a task from the list**
+    - If the user wishes to remove a redundant task from the list that is easily doable. All it takes is for the user to provide the index to remove and to confirm that that index is correct.
+
+- **Input validation**
+    - All user input runs through different validation processes to ensure that values have been given, and that the correct values have been given. If there's an error with the input the user will be made aware for the next attempt.
 
 ## Technologies used
 
@@ -121,6 +147,6 @@ Make sure to push these changes to your repository before deploying.
 1. Open a terminal in the workspace.
 
 2. To exectute the program from the file it's written in type:
-    - python name_of_file.py ("run.py" in this projects case).
+    - python3 name_of_file.py ("run.py" in this projects case).
 
 ## Credits
