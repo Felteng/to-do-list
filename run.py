@@ -240,10 +240,10 @@ def edit_list():
     If the input does not match options alert user and allow another attempt.
     """
     edit_type = input("""
-Type 'edit' to edit a list item
-Type 'add' to add an item to the list
+Type 'edit' to edit a list task
+Type 'add' to add a task to the list
 Type 'complete' to complete a task
-Type 'remove' to remove an item from the list
+Type 'remove' to remove a task from the list
 Or type 'none' to stop editing
 """).lower()
 
