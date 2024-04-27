@@ -171,7 +171,7 @@ def user_decision():
     of whether they would like to edit it as well.
     """
     print(
-        "Type: 'tasks' to show To-do List."
+        "Type: 'tasks' to show to-do List.\n"
         "Type 'history' to show completed tasks.\n"
     )
     user_input = input("Enter your command here:\n").lower()
