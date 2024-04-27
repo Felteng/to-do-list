@@ -170,10 +170,10 @@ def user_decision():
     If user wants to see the to-do list provide a follow-up question
     of whether they would like to edit it as well.
     """
-    print("""Type: 'view' to show To-do List.\n
+    print("""Type: 'tasks' to show To-do List.\n
     Type 'history' to show completed tasks.\n""")
     user_input = input("Enter your command here:\n").lower()
-    if user_input == "view":
+    if user_input == "tasks":
         display_to_do_list()
 
         while True:
@@ -201,7 +201,7 @@ def user_decision():
 
 def display_to_do_list():
     """
-    If 'view' was chosen in user_decision() then display a table of
+    If 'tasks' was chosen in user_decision() then display a table of
     all the tasks that are yet to be completed in the 'To-do' worksheet.
     """
     tasks, deadlines = get_to_do_list()
