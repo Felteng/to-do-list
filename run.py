@@ -170,8 +170,10 @@ def user_decision():
     If user wants to see the to-do list provide a follow-up question
     of whether they would like to edit it as well.
     """
-    print("""Type: 'tasks' to show To-do List.\n
-    Type 'history' to show completed tasks.\n""")
+    print(
+        "Type: 'tasks' to show To-do List."
+        "Type 'history' to show completed tasks.\n"
+    )
     user_input = input("Enter your command here:\n").lower()
     if user_input == "tasks":
         display_to_do_list()
