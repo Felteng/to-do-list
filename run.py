@@ -57,17 +57,18 @@ def validate_index_input(action):
     """
     while True:
         try:
-            index = int(input(f"Which index would you like to {action}?\n"))
-            if index < 1:
+            index = input(f"Which index would you like to {action}?\n")
+            print("")
+            if int(index) < 1:
                 raise ValueError
 
-            index_content = validate_content_presence(index)
-            if index_content is True:
-                return index
+            index_has_content = validate_content_presence(int(index))
+            if index_has_content is True:
+                return int(index)
 
         except ValueError:
             print(
-                "That is not a valid number."
+                f"'{index}' is not a valid number. "
                 "Has to be a number, that is bigger than 0."
             )
 
@@ -84,6 +85,7 @@ def validate_date_input():
     while True:
         try:
             deadline = input("Task deadline (yyyy-mm-dd):\n")
+            print("")
 
             date_input = datetime.strptime(deadline, "%Y-%m-%d")
 
@@ -119,7 +121,7 @@ def validate_task_input():
 
         elif len(task) < 50:
             break
-
+    print("")
     return task
 
 
@@ -134,7 +136,7 @@ def validate_content_presence(index):
     """
     row_values = TO_DO_SHEET.row_values(index + 1)
     if row_values == []:
-        print(f"Index {index} has no data.")
+        print(f"Index {index} has no data.\n")
 
     else:
         return True
@@ -150,6 +152,7 @@ def confirm_action(action, task_index):
         confirm = input(
             f"Are you sure you want to {action} task {task_index}? y/n\n"
         ).lower()
+        print("")
 
         if confirm == "y" or confirm == "yes":
             return "y"
@@ -175,6 +178,7 @@ def user_decision():
         "Type 'history' to show completed tasks.\n"
     )
     user_input = input("Enter your command here:\n").lower()
+    print("")
     if user_input == "tasks":
         display_to_do_list()
 
@@ -182,6 +186,7 @@ def user_decision():
             edit_decision = input(
                 "Do you want to edit the list? y/n\n"
             ).lower()
+            print("")
 
             if edit_decision == "y":
                 edit_list()
@@ -241,15 +246,15 @@ def edit_list():
 
     If the input does not match options alert user and allow another attempt.
     """
-    edit_type = input("""
-Type 'edit' to edit a list task
-Type 'add' to add a task to the list
-Type 'complete' to complete a task
-Type 'remove' to remove a task from the list
-Or type 'none' to stop editing
-""").lower()
-
+    edit_type = input(
+                "Type 'edit' to edit a list task\n"
+                "Type 'add' to add a task to the list\n"
+                "Type 'complete' to complete a task\n"
+                "Type 'remove' to remove a task from the list\n"
+                "Or type 'none' to stop editing\n"
+                ).lower()
     print("")
+
     if edit_type == "edit":
         edit_task()
 
