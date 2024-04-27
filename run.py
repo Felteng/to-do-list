@@ -368,5 +368,7 @@ def remove_task():
     edit_list()
 
 
-print("Welcome back to your To-do List!\n")
-user_decision()
+# Thanks to my mentor Rohit Sharma for suggesting this piece of code.
+if __name__ == "__main__":
+    print("\nWelcome to your To-do List!\n")
+    user_decision()
