@@ -98,6 +98,20 @@ This program functions as a to-do list which the user may manipulate as they see
 - Gitpod - IDE for writing all the code.
 
 ## Testing
+### Test cases
+
+### Bugs
+
+#### Solved bugs
+- Unintended spacing when printing the initial options on program start. \
+![Spacing bug](readme-assets/spacing-bug.png)
+    - Found out that this wad due to the format the code line was split to abide PEP-8. \
+    ![Multi-line code](readme-assets/multi-line-print.png)
+        - This was solved by adopting a different method of splitting the line. \
+        ![New line-split](readme-assets/new-line-split.png)
+
+#### Unsolved bugs
+
 
 ## Deployment
 
