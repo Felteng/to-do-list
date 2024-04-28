@@ -26,7 +26,7 @@ COMPLETED_SHEET = SHEET.worksheet("Completed")
 def list_decision():
     """Ask the user which list they wish to see."""
     print(
-        "Type: 'tasks' to show to-do List.\n"
+        "Type: 'tasks' to show to-do list.\n"
         "Type 'history' to show completed tasks.\n"
     )
     user_input = input("Enter your command here:\n").lower()
