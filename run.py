@@ -378,14 +378,14 @@ def validate_task_input(worksheet_name):
     """
     while True:
         print(
-            "If description is longer than 50 characters it will be cut to 50."
+            "If description is longer than 40 characters it will be cut to 40."
         )
         task = input("Task description:\n")
         if task == "":
             back_to_edit(worksheet_name)
 
-        if len(task) > 50:
-            task = task[:50]
+        if len(task) > 40:
+            task = task[:40]
             print("Task description cut down.")
             break
         else:
