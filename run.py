@@ -116,13 +116,13 @@ def edit_to_do_list():
     print("")
 
     if edit_type == "edit":
-        edit_task()
+        edit_task("To-do")
 
     elif edit_type == "add":
-        add_task()
+        add_task("To-do")
 
     elif edit_type == "complete":
-        complete_task()
+        complete_task("To-do")
 
     elif edit_type == "remove":
         remove_task("To-do")
@@ -157,33 +157,33 @@ def edit_completed_list():
         edit_completed_list()
 
 
-def edit_task():
+def edit_task(worksheet_name):
     """Ask the user which row in the list they would like to edit.
 
     Add 1 to task_index since row 1 in the sheet has the headings.
 
     Let the user provide new input to update the relevant cells.
     """
-    task_index = validate_index_input("edit")
+    task_index = validate_index_input("edit", worksheet_name)
     task_index += 1
 
     while True:
         cell_to_edit = input("Edit 'task', 'deadline', or 'both'?\n").lower()
         if cell_to_edit == "task":
-            new_task = validate_task_input()
+            new_task = validate_task_input(worksheet_name)
             TO_DO_SHEET.update_cell(task_index, 1, new_task)
             print("Task updated successfully\n")
             break
 
         elif cell_to_edit == "deadline":
-            new_deadline = validate_date_input()
+            new_deadline = validate_date_input(worksheet_name)
             TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
             print("Deadline updated successfully\n")
             break
 
         elif cell_to_edit == "both":
-            new_task = validate_task_input()
-            new_deadline = validate_date_input()
+            new_task = validate_task_input(worksheet_name)
+            new_deadline = validate_date_input(worksheet_name)
             TO_DO_SHEET.update_cell(task_index, 1, new_task)
             TO_DO_SHEET.update_cell(task_index, 2, new_deadline)
             print("Task and deadline updated successfully\n")
@@ -195,26 +195,26 @@ def edit_task():
         else:
             print(f"Did not recognize '{cell_to_edit}'.")
 
-    back_to_edit()
+    back_to_edit(worksheet_name)
 
 
-def add_task():
+def add_task(worksheet_name):
     """Ask the user for a task description and task deadline to append
     the new task to the sheet.
     """
-    task = validate_task_input()
-    deadline = validate_date_input()
+    task = validate_task_input(worksheet_name)
+    deadline = validate_date_input(worksheet_name)
     print("Adding task...")
     TO_DO_SHEET.append_row([task, deadline])
     print("Task added successfully\n")
-    back_to_edit()
+    back_to_edit(worksheet_name)
 
 
-def complete_task():
+def complete_task(worksheet_name):
     """Ask the user which index they would like to complete.
 
     Get confirmation if the index is correct, if user is not sure,
-    return to edit_to_do_list(), if user is sure, proceed with completion.
+    go to back_to_edit(), if user is sure, proceed with completion.
 
     Add a value of 1 to task_index when changing a sheet
     since row 1 in the sheet has the headings.
@@ -223,7 +223,7 @@ def complete_task():
 
     As for all editing inputs enter an empty string will take the user back.
     """
-    task_index = validate_index_input("complete")
+    task_index = validate_index_input("complete", worksheet_name)
     confirm = confirm_action("complete", task_index)
     if confirm == "y":
         print(f"Completing task {task_index}...")
@@ -236,10 +236,7 @@ def complete_task():
 
         print("Task completed successfully\n")
 
-    elif confirm == "n":
-        back_to_edit()
-
-    back_to_edit()
+    back_to_edit(worksheet_name)
 
 
 def remove_task(worksheet_name):
@@ -263,16 +260,13 @@ def remove_task(worksheet_name):
         target_sheet.delete_rows(task_index + 1)
         print("Task removed successfully\n")
 
-    elif confirm == "n":
-        back_to_edit(worksheet_name)
-
     back_to_edit(worksheet_name)
 
 
-def back_to_edit(*origin_worksheet):
-    """Call if user presses enter with no input or with 'n' while editing"""
+def back_to_edit(worksheet_name):
+    """Call if user presses enter with no input or with 'n' while editing."""
     print("Going back to edit choices...")
-    if origin_worksheet[0] == "Completed":
+    if worksheet_name == "Completed":
         display_completed_list()
         edit_completed_list()
 
@@ -306,26 +300,25 @@ def get_completed_list():
     return tasks, deadlines, time_completed
 
 
-def validate_index_input(action, *origin_worksheet):
+def validate_index_input(action, worksheet_name):
     """Call this function for any action
     that needs the user to select an index to access.
 
     Raise ValueError if the index input is smaller than 1
     or if it's not a number.
 
-    As for all editing inputs enter an empty string will take the user back.
+    Use worksheet_name to call back_to_edit for correct list.
     """
     while True:
         try:
             index = input(f"Which index would you like to {action}?\n")
-
             print("")
             if index == "":
-                back_to_edit(origin_worksheet[0])
+                back_to_edit(worksheet_name)
             elif int(index) < 1:
                 raise ValueError
 
-            if origin_worksheet[0] == "Completed":
+            if worksheet_name == "Completed":
                 index_has_content = (
                     validate_content_presence(int(index), "Completed")
                     )
@@ -344,7 +337,7 @@ def validate_index_input(action, *origin_worksheet):
             )
 
 
-def validate_date_input():
+def validate_date_input(worksheet_name):
     """Call this function whenever user is expected to provide a deadline.
     Checks if the date is in the correct format for consistency.
     Checks if the date is valid in the sense that it has not already passed.
@@ -353,13 +346,13 @@ def validate_date_input():
     Get current date and convert it to a string, then parse it back
     into a datetime object with strptime to compare against date_input.
 
-    As for all editing inputs enter an empty string will take the user back.
+    Use worksheet_name to call back_to_edit for correct list.
     """
     while True:
         try:
             deadline = input("Task deadline (yyyy-mm-dd):\n")
             if deadline == "":
-                back_to_edit()
+                back_to_edit(worksheet_name)
 
             print("")
             date_input = datetime.strptime(deadline, "%Y-%m-%d")
@@ -374,13 +367,13 @@ def validate_date_input():
             print(f"{deadline} does not match format: yyyy-mm-dd")
 
 
-def validate_task_input():
+def validate_task_input(worksheet_name):
     """Call this function whenever an input for a task is needed.
 
     Valdidates the length of the task string to avoid bugs in the table
     and assures ANY input is provided.
 
-    As for all editing inputs enter an empty string will take the user back.
+    Use worksheet_name to call back_to_edit for correct list.
     """
     while True:
         print(
@@ -388,7 +381,7 @@ def validate_task_input():
         )
         task = input("Task description:\n")
         if task == "":
-            back_to_edit()
+            back_to_edit(worksheet_name)
 
         if len(task) > 50:
             task = task[:50]
@@ -401,7 +394,7 @@ def validate_task_input():
     return task
 
 
-def validate_content_presence(index, origin_worksheet):
+def validate_content_presence(index, worksheet_name):
     """Whenever user provides an index this function checks if the index
     has any content. Returns True if yes it does, alert user if it does not.
 
@@ -410,7 +403,7 @@ def validate_content_presence(index, origin_worksheet):
     Since the user HAS to provide a task and deadline to a task the content
     will be valid if the row is NOT empty.
     """
-    target_sheet = SHEET.worksheet(origin_worksheet)
+    target_sheet = SHEET.worksheet(worksheet_name)
     row_values = target_sheet.row_values(index + 1)
     if row_values == []:
         print(f"Index {index} has no data.\n")
@@ -435,7 +428,7 @@ def confirm_action(action, task_index):
             return "y"
 
         elif confirm == "n" or confirm == "no" or confirm == "":
-            return "n"
+            return
 
         else:
             print(f"Did not recognize '{confirm}'.")
