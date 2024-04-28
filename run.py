@@ -47,19 +47,19 @@ def list_decision():
 def edit_list_decision(chosen_list):
     """Ask the user if they would like to edit the list they chose to see."""
     while True:
-        edit_decision = input(
+        decision = input(
             "Do you want to edit the list? y/n\n"
         ).lower()
         print("")
 
-        if edit_decision == "y":
+        if decision == "y" or decision == "yes":
             if chosen_list == "tasks":
                 edit_to_do_list()
 
             elif chosen_list == "history":
                 edit_completed_list()
 
-        elif edit_decision == "n":
+        elif decision == "n" or decision == "no":
             list_decision()
 
         else:
