@@ -191,7 +191,7 @@ def edit_task(worksheet_name):
             break
 
         elif cell_to_edit == "":
-            edit_to_do_list()
+            back_to_edit(worksheet_name)
 
         else:
             print(f"Did not recognize '{cell_to_edit}'.")
