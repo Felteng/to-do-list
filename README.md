@@ -39,63 +39,78 @@ This program functions as a to-do list which the user may manipulate as they see
 
 ## Features and planning
 
-
-
 ### Logic planning
 ![Logic Flowchart](readme-assets/to-do-list-flowchart.png)
 
 ### Current features
-- **List display**
-    - Start by choosing to either view the 'tasks' on to-do list, or to view the 'history' of completed tasks.
+- **Choose your list**
+    - Start by choosing to either view the 'tasks' on to-do list, or to view the 'history' of completed tasks. \
+    ![Choose list](readme-assets/choose-list.png)
 
 - **The to-do list 'tasks'**
-    - This option will display all the tasks yet to completed or removed on the to-do list, with their indices and respective deadlines.
+    - This option will display all the tasks yet to completed or removed on the to-do list, with their indices and respective deadlines. With an option to edit. \
+    ![To-do list](readme-assets/to-do-list.png)
 
 - **The 'history' of completed tasks**
-    - This option will display a table of all the tasks that have been marked as completed, with an added column of when it was completed.
+    - This option will display a table of all the tasks that have been marked as completed, with an added column of when it was completed. With an option to edit. \
+    ![History list](readme-assets/completed-list.png)
 
-- **Editing the list of tasks**
-    - After choosing to view the to-do list and it's task the user is presented with option to start editing the list.
+- **Editing the to-do list of tasks**
+    - After choosing to edit the to-do list and the user will be presented with different editing options. \
+    ![Editing to-do list](readme-assets/edit-choice.png)
 
 - **Edit a task on the list**
-    - Choosing 'edit' will let the user pick an index to edit, followed by what should be edited on the chosen index.
+    - Choosing 'edit' will let the user pick an index to edit, followed by what should be edited on the chosen index. \
+    ![Edit a task](readme-assets/edit-task.png)
 
 - **Add a task to the list**
-    - When adding a task to the list the user gets to provide a description of the task followed by a deadline for the task.
+    - When adding a task to the list the user gets to provide a description of the task followed by a deadline for the task. \
+    ![Add a task](readme-assets/add-task.png)
 
 - **Complete task from the list**
-    - Marking a task as complete from the list will move it to the 'history' sheet with all the completed tasks.
+    - Marking a task as complete from the list will move it to the 'history' sheet with all the completed tasks, along with the date the task was completed. \
+    ![Complete a task](readme-assets/complete-task.png)
 
 - **Removing a task from the list**
-    - If the user wishes to remove a redundant task from the list that is easily doable. All it takes is for the user to provide the index to remove and to confirm that that index is correct.
+    - If the user wishes to remove a redundant task from the list that is easily doable. All it takes is for the user to provide the index to remove and to confirm that that index is correct. \
+    ![Removing a task](readme-assets/remove-task.png)
+
+- **Editing the 'history' of completed tasks**
+    - After choosing to edit the history list and the user will be able to remove a a 'completed' task in case it was accidentally completed. \
+    ![Editing history list](readme-assets/completed-edit-choice.png)
+
+- **Removing a completed task**
+    - If the user wishes to remove a completed task from the history list that is easily doable. Simply pick the relevant index and confirm it is correct. \
+    ![Removing a completed task](readme-assets/remove-completed.png)
 
 - **Input validation**
     - All user input runs through different validation processes to ensure that values have been given, and that the correct values have been given. If there's an error with the input the user will be made aware for the next attempt.
+    
 
 ## Technologies used
 
 ### Languages
-- Python
+- [Python](https://www.python.org/)
 
 ### Frameworks and libraries
-- Google Cloud - Setting up API connections.
+- [Google Cloud](https://console.cloud.google.com/) - Setting up API connections.
 
-- GSpread - Manipulation of the spreadsheet holding the task information.
+- [GSpread](https://pypi.org/project/gspread/) - Manipulation of the spreadsheet holding the task information.
 
-- PrettyTable - Printing a comprehenisive table to the terminal.
+- [PrettyTable](https://pypi.org/project/prettytable/) - Printing a comprehenisive table to the terminal.
 
-- OAuth2 - Authenticating credentials for API.
+- [OAuth2](https://pypi.org/project/oauth2/) - Authenticating credentials for API.
 
-- Flake8 - In IDE linter.
+- [Flake8](https://flake8.pycqa.org/en/latest/) - In IDE PEP-8 linter.
 
-- CI Python Linter - External linter for live adjustments.
+- [CI Python Linter](https://pep8ci.herokuapp.com/#) - External PEP-8 linter for live adjustments.
 
 ### Development
-- Git - Version control system.
+- [Git](https://git-scm.com/) - Version control system.
 
-- GitHub - Hosting and storing Git repository.
+- [GitHub](https://github.com/) - Hosting and storing Git repository.
 
-- Gitpod - IDE for writing all the code.
+- [Gitpod](https://www.gitpod.io/) - IDE for writing all the code.
 
 ## Testing
 ### Test cases
