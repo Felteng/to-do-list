@@ -36,6 +36,21 @@ This program functions as a to-do list which the user may manipulate as they see
 ## User experience
 
 ### User stories
+- As a first-time visitor:
+    - I want to find an application that can help me organize my everyday tasks and provide som structure.
+
+    - I want to be able to quickly get an understanding of the application I'm interacting with through a display simple and concise information.
+
+    - I want to explore and utilize a program without being plagued by bugs and or techincal errors preventing me from understanding the program.
+
+- As a returning visitor:
+    - I want to quickly be able to access the information I've stored within this application as a daily routine.
+
+    - I want to have the ability to easily manipulate the information and my task schedule.
+
+    - I want to able to look back through 'time' and see what tasks I've accomplished.
+
+    - I want my data to persist so that I can access it from anywhere on any device.
 
 ## Features and planning
 
@@ -85,7 +100,13 @@ This program functions as a to-do list which the user may manipulate as they see
 
 - **Input validation**
     - All user input runs through different validation processes to ensure that values have been given, and that the correct values have been given. If there's an error with the input the user will be made aware for the next attempt.
-    
+
+### Future features
+- One obivous flaw in terms of appealing to a broad user base, or any user base at all is the fact that the whole to-do list is stored and managed around 1 spreadsheet file on my google account.
+    - To improve upon this a solid future feature would be to implement user unique registration and login to allow for a large user base to share the same program but not have to share the same storage.
+
+- Something I came to realize towards the end of the time window for this project is that the terminal could use some color on whatever is printed to convey more meaning to things like user errors for example.
+    - To implement this I would suggest looking for a Python package on [PyPi](https://pypi.org/) with feature to change terminal line colors.
 
 ## Technologies used
 
