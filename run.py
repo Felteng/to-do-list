@@ -63,7 +63,7 @@ def edit_list_decision(chosen_list):
             list_decision()
 
         else:
-            print(f"Did not recognize '{edit_decision}'.")
+            print(f"Did not recognize '{decision}'.")
 
 
 def display_to_do_list():
