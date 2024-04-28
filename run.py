@@ -169,6 +169,7 @@ def edit_task(worksheet_name):
 
     while True:
         cell_to_edit = input("Edit 'task', 'deadline', or 'both'?\n").lower()
+        print("")
         if cell_to_edit == "task":
             new_task = validate_task_input(worksheet_name)
             TO_DO_SHEET.update_cell(task_index, 1, new_task)
