@@ -164,7 +164,7 @@ def confirm_action(action, task_index):
             print(f"Did not recognize '{confirm}'.")
 
 
-def user_decision():
+def list_decision():
     """Ask the user what they wish to see from the spreadsheet.
 
     If the input in user_input was faulty,
@@ -192,23 +192,23 @@ def user_decision():
                 edit_list()
 
             elif edit_decision == "n":
-                user_decision()
+                list_decision()
 
             else:
                 print(f"Did not recognize '{edit_decision}'.")
 
     elif user_input == "history":
         display_completed_list()
-        user_decision()
+        list_decision()
 
     else:
         print(f"Invalid command.. You entered: '{user_input}'.")
-        user_decision()
+        list_decision()
 
 
 def display_to_do_list():
     """
-    If 'tasks' was chosen in user_decision() then display a table of
+    If 'tasks' was chosen in list_decision() then display a table of
     all the tasks that are yet to be completed in the 'To-do' worksheet.
     """
     tasks, deadlines = get_to_do_list()
@@ -224,7 +224,7 @@ def display_to_do_list():
 
 def display_completed_list():
     """
-    If 'history' was chosen in user_decision() then display a table of
+    If 'history' was chosen in list_decision() then display a table of
     all the tasks in the 'Completed' worksheet.
     """
     tasks, deadlines, times = get_completed_list()
@@ -236,7 +236,7 @@ def display_completed_list():
         table.add_row([index, task, deadline, time])
         index += 1
     print(table)
-    user_decision()
+    list_decision()
 
 
 def edit_list():
@@ -268,7 +268,7 @@ def edit_list():
         remove_task()
 
     elif edit_type == "none":
-        user_decision()
+        list_decision()
 
     else:
         print(f"Did not recognize '{edit_type}'.")
@@ -378,4 +378,4 @@ def remove_task():
 # Thanks to my mentor Rohit Sharma for suggesting this piece of code.
 if __name__ == "__main__":
     print("\nWelcome to your To-do List!\n")
-    user_decision()
+    list_decision()
