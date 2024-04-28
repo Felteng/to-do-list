@@ -61,7 +61,7 @@ This program functions as a to-do list which the user may manipulate as they see
 
 - **Edit a task on the list**
     - Choosing 'edit' will let the user pick an index to edit, followed by what should be edited on the chosen index. \
-    ![Edit a task](readme-assets/edit-task.png)
+    ![Edit a task](readme-assets/edit-a-task.png)
 
 - **Add a task to the list**
     - When adding a task to the list the user gets to provide a description of the task followed by a deadline for the task. \
@@ -114,7 +114,197 @@ This program functions as a to-do list which the user may manipulate as they see
 
 ## Testing
 ### Test cases
+- Start the program.
+    - Expected output: See a short welcome message followed by 2 options.
+    - Actual output: \
+    ![Choose a list](readme-assets/choose-list.png)
 
+- Give faulty input.
+    - Expected output: Get feedback of bad input.
+    - Actual output: \
+    ![Faulity input](readme-assets/bad-input.png)
+
+- Enter 'tasks' with any letter casing.
+    - Expected output: See the to-do list with current tasks, with edit option below.
+    - Actual output: \
+    ![To-do list](readme-assets/to-do-list.png)
+
+- Enter 'history' with any letter casing.
+    - Expected output: See the history list of completed tasks, with edit option below.
+    - Actual output: \
+    ![History list](readme-assets/completed-list.png)
+
+- Give faulty input on the edit the list option.
+    - Expected output: Get feedback of bad input.
+    - Actual output: \
+    ![Faulty edit input](readme-assets/bad-edit-input.png)
+
+- Type 'n', or 'no', with any letter casing on the edit list option.
+    - Expected output: Get taken back to the initial 2 options.
+    - Actual output: \
+    ![No editing](readme-assets/no-editing.png)
+
+- Type 'y', or 'yes', with any letter casing on the edit list option.
+    - Expected output: See the relevant editing options depending on which list was chosen before. 
+    - Actual output: \
+    ![Edit to-do list](readme-assets/edit-tasks.png)
+    ![Edit history](readme-assets/edit-history.png)
+
+- Give input that is not listed above on what to edit.
+    - Expected output: Get feedback of bad input.
+    - Actual output: \
+    ![Faulty edit type input](readme-assets/bad-edit-option.png)
+
+- Enter 'edit' with any letter casing.
+    - Expected output: Get prompted to input a task index to edit.
+    - Actual output: \
+    !['Edit' as input](readme-assets/edit-option.png)
+
+- Enter an index from the list above.
+    - Expected output: Get asked to edit 'task', 'deadline', or 'both'.
+    - Actual output: \
+    ![Index from the list above](readme-assets/valid-index.png)
+
+- Enter 'task' with any letter casing.
+    - Expected output: Get asked to enter a task description that is shorter than 40 characters.
+    - Actual output: \
+    ![Edit 'task'](readme-assets/edit-task.png)
+
+- Enter 'deadline' with any letter casing.
+    - Expected output: Get asked to enter a deadline in yyyy-mm-dd format.
+    - Actual output: \
+    ![Edit 'deadline'](readme-assets/edit-deadline.png)
+
+- Enter 'both' with any letter casing. 
+    - Expected output: Get asked to enter a task description, and after that to enter a deadline.
+    - Actual output: \
+    ![Edit 'both'](readme-assets/edit-both.png)
+
+- Fullfil any of the editing options.
+    - Expected output: See the updated list with the editing options below again.
+    - Actual output: \
+    ![Fullfil edit](readme-assets/fullfil-edit.png)
+
+- Enter 'add' with any letter casing.
+    - Expected output: Get asked to enter a task description.
+    - Actual output: \
+    !['Add' as input](readme-assets/add-a-task.png)
+    
+- Enter a description longer than 40 characters.
+    - Expected output: Get notified that the description has been cut down and continue to deadline.
+    - Actual output: \
+    ![Long task description](readme-assets/long-task.png)
+    
+- Enter a deadline.
+    - Expected output: See the new task on the updated list with editing options below.
+    - Actual output: \
+    ![New shortened task added](readme-assets/added-long-task.png)
+    
+- Enter a task description shorter than 40 characters and a deadline.
+    - Expected output: See the task added with the same descrition that was given.
+    - Actual output: \
+    ![New task added](readme-assets/added-task.png)
+    
+- Enter 'complete' with any letter casing.
+    - Expected output: Get asked which index to complete.
+    - Actual output: \
+    ![Complete a task](readme-assets/complete-a-task.png)
+    
+- Enter a valid index to complete.
+    - Expected output: Get asked for confirmation if the index chosen is correct.
+    - Actual output: \
+    ![Index entered now confirm](readme-assets/confirm-complete.png)
+    
+- Enter 'n' or just press enter.
+    - Expected output: Get sent back to editing choices.
+    - Actual output: \
+    !['N' on confirmation](readme-assets/no-complete.png)
+    
+- Repeat complete process but for index 3 and choose 'y'.
+    - Expected output: Get notified task is being completed and see the active task list updated with the editing options below. The completed task can now be found in the 'history' list.
+    - Actual output: \
+    ![Successful task completition](readme-assets/task-completed.png)
+    
+- Enter 'remove' with any letter casing.
+    - Expected output: Get asked which index to remove.
+    - Actual output: \
+    ![Remova a task](readme-assets/remove-a-task.png)
+    
+- Enter a valid index from the list above.
+    - Expected output: Get asked for confirmation if the index chosen is correct.
+    - Actual output: \
+    ![Confirm removal](readme-assets/confirm-remove.png)
+    
+- Enter 'y' or 'yes' with any letter casing to confirm removal.
+    - Expected output: Task removed and update shown with editing options below
+    - Actual output: \
+    ![Task removed and list updated](readme-assets/task-removed.png)
+    
+- Enter 'none' with any letter casing.
+    - Expected output: Get taken back to the 2 list choices.
+    - Actual output: \
+    ![Back to initial 2 list choices](readme-assets/option-none.png)
+    
+- Enter 'history' and then enter 'y' or 'yes' with any letter casing.
+    - Expected output: See the options avaiable for editing the history list.
+    - Actual output: \
+    ![History edit options](readme-assets/history-edit-options.png)
+
+- Enter 'remove' with any letter casing and go through the same process as removing an item from the to-do list to remove index 7.
+    - Expected output: Task 7 removed and list updated to the user with editing options below.
+    - Actual output: \
+    ![Completed task removed](readme-assets/completed-task-removed.png)
+    
+- Enter 'none' with any letter casing.
+    - Expected output: Get taken back to the 2 list choices.
+    - Actual output: \
+    ![Back to initial 2 list choices](readme-assets/option-none-history.png)
+
+- Press enter with no input when asked to choose, 'task', 'deadline', or 'both' when editing a task.
+    - Expected output: 
+    - Actual output: \
+    ![Enter with no input when editing task](readme-assets/enter-on-task-edit.png)
+
+- Press enter with no input when adding a task description for any editing option.
+    - Expected output: Get taken back to the editing options for the list chosen.
+    - Actual output: \
+    ![Enter with no task input](readme-assets/enter-on-task.png)
+    
+- Press enter with no input when setting a deadline.
+    - Expected output: Get taken back to the editing options for the list chosen.
+    - Actual output: \
+    ![Enter with no deadline input](readme-assets/enter-on-deadline.png)
+    
+- Enter a deadline that does not match the format yyyy-mm-dd.
+    - Expected output: Get feedback that the input is not in line with the format.
+    - Actual output: \
+    ![Deadline in wrong format](readme-assets/bad-deadline-format.png)
+    
+- Enter a deadline with correct format of a date that has already passed.
+    - Expected output: 
+    - Actual output: \
+    ![Deadline with a date from the past](readme-assets/deadline-past-date.png)
+
+- Press enter with no input when asked to select an index for any editing option.
+    - Expected output: Get taken back to the editing options for the list chosen.
+    - Actual output: \
+    ![Enter with no index input](readme-assets/enter-on-index.png)
+
+- Enter an index not on the list while editing.
+    - Expected output: Get feedback that the chosen index has no data.
+    - Actual output: \
+    ![](readme-assets/index-not-on-list.png)
+
+- Enter an index that is not a number.
+    - Expected output: Get feedback that the index should be a number that is larger than 0.
+    - Actual output: \
+    ![](readme-assets/not-a-number-index.png)
+
+- Enter a number that is < 1.
+    - Expected output: Get feedback that the index should be a number that is larger than 0.
+    - Actual output: \
+    ![](readme-assets/smaller-than-one-index.png)
+    
 ### Bugs
 
 #### Solved bugs
