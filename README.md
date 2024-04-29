@@ -56,7 +56,7 @@ This program functions as a to-do list which the user may manipulate as they see
     - Get a scope of important day to day tasks all in one place to avoid stressful situations where a task or deadline gets lost track of.
 
 - ***Look back through time.***
-    - Have the ability to look back in history to see what adn when tasks have been accomplished.
+    - Have the ability to look back in history to see what and when tasks have been accomplished.
 
 - ***Relish a convenient experience.***
     - Avoid being plagued by bugs and technical difficulties while using the application, and get meaningful feedback when necessary.
@@ -66,11 +66,11 @@ This program functions as a to-do list which the user may manipulate as they see
 
 ### User stories
 - As a first-time visitor:
-    - I want to find an application that can help me organize my everyday tasks and provide som structure.
+    - I want to find an application that can help me organize my everyday tasks and provide some structure.
 
     - I want to be able to quickly get an understanding of the application I'm interacting with through a display simple and concise information.
 
-    - I want to explore and utilize a program without being plagued by bugs and or techincal errors preventing me from understanding the program.
+    - I want to explore and utilize a program without being plagued by bugs and or technical errors preventing me from understanding the program.
 
 - As a returning visitor:
     - I want to quickly be able to access the information I've stored within this application as a daily routine.
@@ -121,7 +121,7 @@ This program functions as a to-do list which the user may manipulate as they see
     ![Removing a task](readme-assets/remove-task.png)
 
 - **Editing the 'history' of completed tasks**
-    - After choosing to edit the history list and the user will be able to remove a a 'completed' task in case it was accidentally completed. \
+    - After choosing to edit the history list and the user will be able to remove a 'completed' task in case it was accidentally completed. \
     ![Editing history list](readme-assets/completed-edit-choice.png)
 
 - **Removing a completed task**
@@ -132,7 +132,7 @@ This program functions as a to-do list which the user may manipulate as they see
     - All user input runs through different validation processes to ensure that values have been given, and that the correct values have been given. If there's an error with the input the user will be made aware for the next attempt.
 
 ### Future features
-- One obivous flaw in terms of appealing to a broad user base, or any user base at all is the fact that the whole to-do list is stored and managed around 1 spreadsheet file on my google account.
+- One obvious flaw in terms of appealing to a broad user base, or any user base at all is the fact that the whole to-do list is stored and managed around 1 spreadsheet file on my google account.
     - To improve upon this a solid future feature would be to implement user unique registration and login to allow for a large user base to share the same program but not have to share the same storage.
 
 - Something I came to realize towards the end of the time window for this project is that the terminal could use some color on whatever is printed to convey more meaning to things like user errors for example.
@@ -150,7 +150,7 @@ This program functions as a to-do list which the user may manipulate as they see
 
 - [gspread](https://pypi.org/project/gspread/) - Manipulation of the spreadsheet holding the task information.
 
-- [PrettyTable](https://pypi.org/project/prettytable/) - Printing a comprehenisive table to the terminal.
+- [PrettyTable](https://pypi.org/project/prettytable/) - Printing a comprehensive table to the terminal.
 
 - [OAuth2](https://pypi.org/project/oauth2/) - Authenticating credentials for API.
 
@@ -179,7 +179,7 @@ This program functions as a to-do list which the user may manipulate as they see
 - Give faulty input.
     - Expected output: Get feedback of bad input.
     - Actual output: \
-    ![Faulity input](readme-assets/bad-input.png)
+    ![Faulty input](readme-assets/bad-input.png)
 
 - Enter 'tasks' with any letter casing.
     - Expected output: See the to-do list with current tasks, with edit option below.
@@ -237,10 +237,10 @@ This program functions as a to-do list which the user may manipulate as they see
     - Actual output: \
     ![Edit 'both'](readme-assets/edit-both.png)
 
-- Fullfil any of the editing options.
+- Fulfill any of the editing options.
     - Expected output: See the updated list with the editing options below again.
     - Actual output: \
-    ![Fullfil edit](readme-assets/fullfil-edit.png)
+    ![Fulfill edit](readme-assets/fullfil-edit.png)
 
 - Enter 'add' with any letter casing.
     - Expected output: Get asked to enter a task description.
@@ -258,7 +258,7 @@ This program functions as a to-do list which the user may manipulate as they see
     ![New shortened task added](readme-assets/added-long-task.png)
     
 - Enter a task description shorter than 40 characters and a deadline.
-    - Expected output: See the task added with the same descrition that was given.
+    - Expected output: See the task added with the same description that was given.
     - Actual output: \
     ![New task added](readme-assets/added-task.png)
     
@@ -280,12 +280,12 @@ This program functions as a to-do list which the user may manipulate as they see
 - Repeat complete process but for index 3 and choose 'y'.
     - Expected output: Get notified task is being completed and see the active task list updated with the editing options below. The completed task can now be found in the 'history' list.
     - Actual output: \
-    ![Successful task completition](readme-assets/task-completed.png)
+    ![Successful task completion](readme-assets/task-completed.png)
     
 - Enter 'remove' with any letter casing.
     - Expected output: Get asked which index to remove.
     - Actual output: \
-    ![Remova a task](readme-assets/remove-a-task.png)
+    ![Remove a task](readme-assets/remove-a-task.png)
     
 - Enter a valid index from the list above.
     - Expected output: Get asked for confirmation if the index chosen is correct.
@@ -303,7 +303,7 @@ This program functions as a to-do list which the user may manipulate as they see
     ![Back to initial 2 list choices](readme-assets/option-none.png)
     
 - Enter 'history' and then enter 'y' or 'yes' with any letter casing.
-    - Expected output: See the options avaiable for editing the history list.
+    - Expected output: See the options available for editing the history list.
     - Actual output: \
     ![History edit options](readme-assets/history-edit-options.png)
 
@@ -408,11 +408,11 @@ After creating my account at Heroku I took the following steps to ensure success
 
 7. We want to set some Config Vars. Since the application utilizes an API to connect with the google spreadsheet, Heroku needs the credentials from the creds.json file.
 
-8. Create a config var with key 'CREDS' and for the value, paste ALL of the content in the creds.json.
+8. Create a config var with key 'CREDS' and for the value, paste ALL the content in the creds.json.
 
 9. The second config var we need to set is key 'PORT' with value '8000'.
 
-10. Now to add 2 neccessary buildpacks, IN THE ORDER SPECIFIED, click add buildpack and choose heroku/python. Then to do the same but choose heroku/nodejs.
+10. Now to add 2 necessary buildpacks, IN THE ORDER SPECIFIED, click add buildpack and choose heroku/python. Then to do the same but choose heroku/nodejs.
 
 Now to prepare the project itself for deployment on Heroku we need to make sure Heroku knows what dependencies to install to run the project.
 
@@ -424,7 +424,7 @@ Make sure to push these changes to your repository before deploying.
 
 13. Back on the app page on Heroku select 'Deploy', choose GitHub as deployment method and connect your account.
 
-14. Search upp the name of the repository for the app to select it.
+14. Search up the name of the repository for the app to select it.
 
 15. Deploy manually by choosing a branch to deploy from and click 'Deploy Branch'.
 
@@ -434,7 +434,7 @@ Make sure to push these changes to your repository before deploying.
 
 1. Open a terminal in the workspace.
 
-2. To exectute the program from the file it's written in type:
+2. To execute the program from the file it's written in type:
     - python3 name_of_file.py ("run.py" in this projects case).
 
 [Back to the top](#to-do-list)
@@ -442,11 +442,11 @@ Make sure to push these changes to your repository before deploying.
 ## Credits
 
 ### Technical
-- [Google Cloud](https://console.cloud.google.com/) - Google Cloud is a cloud based storage service where you can tie your program together with Google's infrastructure. This saw its biggest use in this project by making use of Google Cloud APIs to connect the spreadsheet that holds the application content. Introduction to this  was made for me in Code Institues love sandwiches walkthrough project.
+- [Google Cloud](https://console.cloud.google.com/) - Google Cloud is a cloud based storage service where you can tie your program together with Google's infrastructure. This saw its biggest use in this project by making use of Google Cloud APIs to connect the spreadsheet that holds the application content. Introduction to this  was made for me in Code Institutes love sandwiches walkthrough project.
 
-- [gspread](https://pypi.org/project/gspread/) - "gspread is a Python API for Google Sheets". It has been a vital tool for manipulating the data relevant to this application. Introduction to this  was made for me in Code Institues love sandwiches walkthrough project.
+- [gspread](https://pypi.org/project/gspread/) - "gspread is a Python API for Google Sheets". It has been a vital tool for manipulating the data relevant to this application. Introduction to this  was made for me in Code Institutes love sandwiches walkthrough project.
 
-- [PrettyTable](https://pypi.org/project/prettytable/) - "A simple Python library for easily displaying tabular data in a visually appealing ASCII table format". The need for a tool such as PrettyTable was identified early on as I knew I was going to need to display the relevant information in a comprehenisve way and PrettyTable seemed like the best option, even though there were plenty of others.
+- [PrettyTable](https://pypi.org/project/prettytable/) - "A simple Python library for easily displaying tabular data in a visually appealing ASCII table format". The need for a tool such as PrettyTable was identified early on as I knew I was going to need to display the relevant information in a comprehensive way and PrettyTable seemed like the best option, even though there were plenty of others.
 
 - [OAuth2](https://pypi.org/project/oauth2/) - Used for authenticating credentials for the google drive API.
 
@@ -456,7 +456,7 @@ Make sure to push these changes to your repository before deploying.
 
 ### Community recognition
 
-- My menntor Rohit Sharma for his advice throughout the project.
+- My mentor Rohit Sharma for his advice throughout the project.
 
 - [W3schools](https://www.w3schools.com/python) for their extensive breakdown of various coding concepts.
 
