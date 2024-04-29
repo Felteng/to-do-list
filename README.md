@@ -1,6 +1,8 @@
 # To-do List
 This program functions as a to-do list which the user may manipulate as they see fit. It's stored in an external google sheet so it is mostly limited to personal use as of now.
 
+![Am I responsive page image](readme-assets/am-i-responsive.png)
+
 [Live link](https://felteng-to-do-list-fc4edcc70d21.herokuapp.com/) to the application.
 
 ## Table of contents
