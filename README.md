@@ -452,6 +452,8 @@ Make sure to push these changes to your repository before deploying.
 
 - [CI Python Linter](https://pep8ci.herokuapp.com/#) - Huge thanks to Code Institute once again for this amazing tool. This tool was utilized fully in the later stages of the project to ensure the code is up to PEP-8 standards.
 
+- The global variable code for the API integration was embraced from Code Institute love_sandwiches walkthrough project.
+
 ### Community recognition
 
 - My menntor Rohit Sharma for his advice throughout the project.
