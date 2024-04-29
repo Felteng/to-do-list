@@ -319,16 +319,12 @@ def validate_index_input(action, worksheet_name):
             elif int(index) < 1:
                 raise ValueError
 
-            if worksheet_name == "Completed":
-                index_has_content = (
-                    validate_content_presence(int(index), "Completed")
-                    )
-            else:
-                index_has_content = (
-                    validate_content_presence(int(index), "To-do")
-                    )
+            index_has_content = (
+                validate_content_presence(int(index), worksheet_name)
+            )
 
             if index_has_content is True:
+                
                 return int(index)
 
         except ValueError:
@@ -405,12 +401,17 @@ def validate_content_presence(index, worksheet_name):
     will be valid if the row is NOT empty.
     """
     target_sheet = SHEET.worksheet(worksheet_name)
-    row_values = target_sheet.row_values(index + 1)
-    if row_values == []:
-        print(f"Index {index} has no data.\n")
-
+    if index > target_sheet.row_count:
+        print(f"Index {index} has no data.")
+        return
+        
     else:
-        return True
+        row_values = target_sheet.row_values(index + 1)
+        if row_values == []:
+            print(f"Index {index} has no data.")
+
+        else:
+            return True
 
 
 def confirm_action(action, task_index):
