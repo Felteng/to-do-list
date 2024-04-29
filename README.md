@@ -30,6 +30,8 @@ This program functions as a to-do list which the user may manipulate as they see
     - [Local](#local-deployment)
 
 - [Credits](#credits)
+    - [Technical](#technical)
+    - [Community recognition](#community-recognition)
 
 ## The goal
 
@@ -59,6 +61,7 @@ This program functions as a to-do list which the user may manipulate as they see
 - ***Relish a convenient experience.***
     - Avoid being plagued by bugs and technical difficulties while using the application, and get meaningful feedback when necessary.
 
+[Back to the top](#to-do-list)
 ## User experience
 
 ### User stories
@@ -78,6 +81,7 @@ This program functions as a to-do list which the user may manipulate as they see
 
     - I want my data to persist so that I can access it from anywhere on any device.
 
+[Back to the top](#to-do-list)
 ## Features and planning
 
 ### Logic planning
@@ -134,6 +138,8 @@ This program functions as a to-do list which the user may manipulate as they see
 - Something I came to realize towards the end of the time window for this project is that the terminal could use some color on whatever is printed to convey more meaning to things like user errors for example.
     - To implement this I would suggest looking for a Python package on [PyPi](https://pypi.org/) with feature to change terminal line colors.
 
+[Back to the top](#to-do-list)
+
 ## Technologies used
 
 ### Languages
@@ -142,7 +148,7 @@ This program functions as a to-do list which the user may manipulate as they see
 ### Frameworks and libraries
 - [Google Cloud](https://console.cloud.google.com/) - Setting up API connections.
 
-- [GSpread](https://pypi.org/project/gspread/) - Manipulation of the spreadsheet holding the task information.
+- [gspread](https://pypi.org/project/gspread/) - Manipulation of the spreadsheet holding the task information.
 
 - [PrettyTable](https://pypi.org/project/prettytable/) - Printing a comprehenisive table to the terminal.
 
@@ -160,6 +166,8 @@ This program functions as a to-do list which the user may manipulate as they see
 - [Gitpod](https://www.gitpod.io/) - IDE for writing all the code.
 
 - [Heroku](https://www.heroku.com/) - For deploying the program to live platform.
+
+[Back to the top](#to-do-list)
 
 ## Testing
 ### Test cases
@@ -375,7 +383,9 @@ This program functions as a to-do list which the user may manipulate as they see
         ![Code to handle large index input](readme-assets/big-index-fix.png)
 
 #### Unsolved bugs
-None aware of at the time of 2024-04-29.
+- None aware of at the time of 2024-04-29.
+
+[Back to the top](#to-do-list)
 
 ## Deployment
 
@@ -427,4 +437,29 @@ Make sure to push these changes to your repository before deploying.
 2. To exectute the program from the file it's written in type:
     - python3 name_of_file.py ("run.py" in this projects case).
 
+[Back to the top](#to-do-list)
+
 ## Credits
+
+### Technical
+- [Google Cloud](https://console.cloud.google.com/) - Google Cloud is a cloud based storage service where you can tie your program together with Google's infrastructure. This saw its biggest use in this project by making use of Google Cloud APIs to connect the spreadsheet that holds the application content. Introduction to this  was made for me in Code Institues love sandwiches walkthrough project.
+
+- [gspread](https://pypi.org/project/gspread/) - "gspread is a Python API for Google Sheets". It has been a vital tool for manipulating the data relevant to this application. Introduction to this  was made for me in Code Institues love sandwiches walkthrough project.
+
+- [PrettyTable](https://pypi.org/project/prettytable/) - "A simple Python library for easily displaying tabular data in a visually appealing ASCII table format". The need for a tool such as PrettyTable was identified early on as I knew I was going to need to display the relevant information in a comprehenisve way and PrettyTable seemed like the best option, even though there were plenty of others.
+
+- [OAuth2](https://pypi.org/project/oauth2/) - Used for authenticating credentials for the google drive API.
+
+- [CI Python Linter](https://pep8ci.herokuapp.com/#) - Huge thanks to Code Institute once again for this amazing tool. This tool was utilized fully in the later stages of the project to ensure the code is up to PEP-8 standards.
+
+### Community recognition
+
+- My menntor Rohit Sharma for his advice throughout the project.
+
+- [W3schools](https://www.w3schools.com/python) for their extensive breakdown of various coding concepts.
+
+- My peers over at the [Code Institute Slack Community](https://code-institute-room.slack.com/) for their advice, feedback, and experience.
+
+- [Stack Overflow](https://stackoverflow.com/) for their very large archive of forum posts with community members offering valuable insight regarding many different programming concepts.
+
+[Back to the top](#to-do-list)
