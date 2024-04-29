@@ -324,7 +324,7 @@ def validate_index_input(action, worksheet_name):
             )
 
             if index_has_content is True:
-                
+
                 return int(index)
 
         except ValueError:
@@ -404,7 +404,7 @@ def validate_content_presence(index, worksheet_name):
     if index > target_sheet.row_count:
         print(f"Index {index} has no data.")
         return
-        
+
     else:
         row_values = target_sheet.row_values(index + 1)
         if row_values == []:
