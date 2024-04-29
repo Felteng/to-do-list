@@ -4,6 +4,32 @@ This program functions as a to-do list which the user may manipulate as they see
 [Live link](https://felteng-to-do-list-fc4edcc70d21.herokuapp.com/) to the application.
 
 ## Table of contents
+- [The goal](#the-goal)
+    - [Goal of the developer](#goal-of-the-developer)
+    - [Goal of the user](#goal-of-the-user)
+
+- [User experience](#user-experience)
+    - [User stories](#user-stories)
+
+- [Features and planning](#features-and-planning)
+    - [Logic planning](#logic-planning)
+    - [Current features](#current-features)
+    - [Future features](#future-features)
+
+- [Technologies used](#technologies-used)
+    - [Languages](#languages)
+    - [Framework and libraries](#frameworks-and-libraries)
+    - [Development and deployment](#development-and-deployment)
+
+- [Testing](#testing)
+    - [Test cases](#test-cases)
+    - [Bugs](#bugs)
+
+- [Deployment](#deployment)
+    - [Live deployment](#live-deployment)
+    - [Local](#local-deployment)
+
+- [Credits](#credits)
 
 ## The goal
 
@@ -126,12 +152,14 @@ This program functions as a to-do list which the user may manipulate as they see
 
 - [CI Python Linter](https://pep8ci.herokuapp.com/#) - External PEP-8 linter for live adjustments.
 
-### Development
+### Development and deployment
 - [Git](https://git-scm.com/) - Version control system.
 
 - [GitHub](https://github.com/) - Hosting and storing Git repository.
 
 - [Gitpod](https://www.gitpod.io/) - IDE for writing all the code.
+
+- [Heroku](https://www.heroku.com/) - For deploying the program to live platform.
 
 ## Testing
 ### Test cases
@@ -314,17 +342,22 @@ This program functions as a to-do list which the user may manipulate as they see
 - Enter an index not on the list while editing.
     - Expected output: Get feedback that the chosen index has no data.
     - Actual output: \
-    ![](readme-assets/index-not-on-list.png)
+    ![Feedback from index not on the list](readme-assets/index-not-on-list.png)
 
 - Enter an index that is not a number.
     - Expected output: Get feedback that the index should be a number that is larger than 0.
     - Actual output: \
-    ![](readme-assets/not-a-number-index.png)
+    ![Feedback from index that is not a number](readme-assets/not-a-number-index.png)
 
 - Enter a number that is < 1.
     - Expected output: Get feedback that the index should be a number that is larger than 0.
     - Actual output: \
-    ![](readme-assets/smaller-than-one-index.png)
+    ![Feedback from index that is too small](readme-assets/smaller-than-one-index.png)
+
+- Enter a number that is larger than amount of rows in the worksheet.
+    - Expected output: Get feedback that the index chosen has no data.
+    - Actual output: \
+    ![Feedback from index that does not exist](readme-assets/index-not-exist.png)
     
 ### Bugs
 
@@ -336,8 +369,13 @@ This program functions as a to-do list which the user may manipulate as they see
         - This was solved by adopting a different method of splitting the line. \
         ![New line-split](readme-assets/new-line-split.png)
 
-#### Unsolved bugs
+- APIError raised when index input is larger than number of rows in sheet.
+    - Missing a handler for such an input.
+        - Implemented a way of handling it into the validate_content_presence function.
+        ![Code to handle large index input](readme-assets/big-index-fix.png)
 
+#### Unsolved bugs
+None aware of at the time of 2024-04-29.
 
 ## Deployment
 
