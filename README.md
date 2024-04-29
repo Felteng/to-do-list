@@ -26,6 +26,7 @@ This program functions as a to-do list which the user may manipulate as they see
 - [Testing](#testing)
     - [Test cases](#test-cases)
     - [Bugs](#bugs)
+    - [Validating](#validating)
 
 - [Deployment](#deployment)
     - [Live deployment](#live-deployment)
@@ -386,6 +387,10 @@ This program functions as a to-do list which the user may manipulate as they see
 
 #### Unsolved bugs
 - None aware of at the time of 2024-04-29.
+
+### Validating
+
+- No errors returned from [CI Python Linter](https://pep8ci.herokuapp.com/#) or from flake8 in the terminal. 
 
 [Back to the top](#to-do-list)
 
